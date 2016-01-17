@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 
 import com.hkm.advancedtoolbar.V5.BeastBar;
-import com.hkm.downloadmedialocker.Dialog.ExitDialog;
 import com.hkm.downloadmedialocker.life.EBus;
 import com.hkm.downloadmedialocker.life.RenderTrigger;
 import com.hkm.downloadmedialocker.pages.catelog.PageList;
@@ -21,6 +20,7 @@ import com.hkm.downloadmedialocker.pages.catelog.template_general_list;
 import com.hkm.downloadmedialocker.pages.featureList.skeleton;
 import com.hkm.downloadmedialocker.pages.preference.userpreference;
 import com.hkm.layout.App.WeiXinHost;
+import com.hkm.layout.Dialog.ExitDialog;
 import com.hkm.layout.Menu.TabIconView;
 import com.hkm.layout.WeiXinTabHost;
 import com.hypebeast.sdk.api.model.hbeditorial.Menuitem;

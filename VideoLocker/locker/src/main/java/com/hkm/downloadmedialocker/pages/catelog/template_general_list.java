@@ -3,11 +3,10 @@ package com.hkm.downloadmedialocker.pages.catelog;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
+
 import android.view.View;
 
 import com.hkm.disqus.DisqusClient;
-import com.hkm.downloadmedialocker.Dialog.ErrorMessage;
 import com.hkm.downloadmedialocker.adInterstitual.ListAd;
 import com.hkm.downloadmedialocker.life.Config;
 import com.hkm.downloadmedialocker.life.EBus;
@@ -16,12 +15,11 @@ import com.hkm.downloadmedialocker.pages.articlePage.comment_count_search;
 import com.hkm.downloadmedialocker.pages.featureList.basicfeed;
 import com.hkm.downloadmedialocker.pages.featureList.featureListFragment;
 import com.hkm.downloadmedialocker.pages.featureList.patchHyprbid;
+import com.hkm.layout.Dialog.ErrorMessage;
 import com.hypebeast.sdk.Util.Connectivity;
 import com.hypebeast.sdk.api.exception.ApiException;
 import com.hypebeast.sdk.api.model.hbeditorial.ArticleData;
 import com.hypebeast.sdk.api.model.hbeditorial.PostsObject;
-import com.hypebeast.sdk.api.model.hbeditorial.ResponsePostFromSearch;
-import com.hypebeast.sdk.api.model.hbeditorial.ResponsePostW;
 import com.hypebeast.sdk.api.resources.hypebeast.feedhost;
 import com.hypebeast.sdk.clients.HBEditorialClient;
 import com.neopixl.pixlui.components.textview.TextView;
@@ -31,15 +29,12 @@ import com.squareup.picasso.MemoryPolicy;
 import java.text.ParseException;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by hesk on 9/7/15.
  */
 public class template_general_list extends featureListFragment<ArticleData> {
-    protected final Callback<ResponsePostW> post_response = new Callback<ResponsePostW>() {
+   /* protected final Callback<ResponsePostW> post_response = new Callback<ResponsePostW>() {
         @Override
         public void success(ResponsePostW list, Response response) {
             display_list(list.postList);
@@ -68,7 +63,7 @@ public class template_general_list extends featureListFragment<ArticleData> {
             });
         }
     };
-
+*/
 
     protected void display_list(PostsObject list) {
         try {
@@ -193,7 +188,7 @@ public class template_general_list extends featureListFragment<ArticleData> {
             triggerSearch(getArguments().getString(SEARCH_WORD));
         }*/
 
-        if (requestType == featureListFragment.LATEST) {
+     /*   if (requestType == featureListFragment.LATEST) {
             interfacerequest.the_recent_page(currentpage, post_response);
         } else if (requestType == featureListFragment.CATE) {
             interfacerequest.cate_list(currentpage, slugtag, post_response);
@@ -202,18 +197,18 @@ public class template_general_list extends featureListFragment<ArticleData> {
             triggerSearch(getArguments().getString(SEARCH_WORD));
         } else if (requestType == basicfeed.GENERAL) {
             HBEditorialClient.getInstance(getActivity()).createAPIUniversal(adapter_url).atPage(currentpage, post_response);
-        }
+        }*/
     }
 
     public void triggerSearch(final String searchWord) {
-        try {
+     /*   try {
             requestType = featureListFragment.SEARCH;
             slugtag = searchWord;
             setRefreshInitial();
             interfacerequest.search(searchWord, 1, search_response);
         } catch (Exception e) {
             ErrorMessage.alert(e.getMessage(), getChildFragmentManager());
-        }
+        }*/
     }
 
     @Subscribe
