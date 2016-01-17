@@ -38,7 +38,9 @@ dependencies {
     compile 'com.marshalchen.ultimaterecyclerview:library:0.3.18'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.hkm.advancedtoolbar:advancedtoolbar:0.6.1'
-  //  compile 'com.bettervectordrawable:lib:0.7'
-//    compile 'com.telly:mrvector:0.2.0'
-   //   compile 'com.jakewharton:butterknife:7.0.1'
+    //  compile 'com.bettervectordrawable:lib:0.7'
+    //  compile 'com.telly:mrvector:0.2.0'
+    //  compile 'com.jakewharton:butterknife:7.0.1'
 }
+
+apply from: '../br.gradle'

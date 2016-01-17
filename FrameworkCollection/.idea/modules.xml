@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/FrameworkCollection.iml" filepath="$PROJECT_DIR$/FrameworkCollection.iml" />
       <module fileurl="file://$PROJECT_DIR$/LayoutCollections/LayoutCollections.iml" filepath="$PROJECT_DIR$/LayoutCollections/LayoutCollections.iml" />
-      <module fileurl="file://$PROJECT_DIR$/editorial/editorial.iml" filepath="$PROJECT_DIR$/editorial/editorial.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hbv2.iml" filepath="$PROJECT_DIR$/hbv2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
     </modules>
   </component>
 </project>
