@@ -1,1 +1,1 @@
-include  ':locker', ':LayoutCollections'
+include  ':locker'

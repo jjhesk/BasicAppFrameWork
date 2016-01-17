@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LayoutCollections/LayoutCollections.iml" filepath="$PROJECT_DIR$/LayoutCollections/LayoutCollections.iml" />
       <module fileurl="file://$PROJECT_DIR$/VideoLocker.iml" filepath="$PROJECT_DIR$/VideoLocker.iml" />
       <module fileurl="file://$PROJECT_DIR$/locker/locker.iml" filepath="$PROJECT_DIR$/locker/locker.iml" />
     </modules>
