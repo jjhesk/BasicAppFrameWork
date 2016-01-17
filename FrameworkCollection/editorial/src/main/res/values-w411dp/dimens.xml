@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--NEXUS 7-->
+    <dimen name="splash_horizontal_margin">100dp</dimen>
+    <integer name="video_height">200</integer>
+    <dimen name="list_pic_item_height">120.5326188dp</dimen>
+    <dimen name="list_pic_item_width">185.5dp</dimen>
+
+</resources>

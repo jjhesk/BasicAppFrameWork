@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/LayoutCollections/LayoutCollections.iml" filepath="$PROJECT_DIR$/LayoutCollections/LayoutCollections.iml" />
+      <module fileurl="file://$PROJECT_DIR$/editorial/editorial.iml" filepath="$PROJECT_DIR$/editorial/editorial.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hbv2.iml" filepath="$PROJECT_DIR$/hbv2.iml" />
+    </modules>
+  </component>
+</project>

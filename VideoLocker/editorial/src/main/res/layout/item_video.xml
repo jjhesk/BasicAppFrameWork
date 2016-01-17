@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pixlui="http://schemas.android.com/apk/com.neopixl.pixlui"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height_video_roll">
+
+        <ImageView
+            android:id="@id/ls_ft_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <ImageButton
+            android:id="@id/ls_button_play"
+            style="@style/rippleButton"
+            android:layout_width="@dimen/button_play_video"
+            android:layout_height="@dimen/button_play_video"
+            android:layout_centerInParent="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/apptviconplaybutton"
+            android:tint="@color/card_face" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <com.neopixl.pixlui.components.textview.TextView
+        android:id="@id/ls_title_article"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/ls_title_sp"
+        pixlui:typeface="oswald.regular.ttf" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <com.neopixl.pixlui.components.textview.TextView
+        android:id="@id/ls_comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_color_grey"
+        android:textSize="@dimen/ls_comment_sp"
+        pixlui:typeface="Montserrat-Regular.ttf" />
+
+</LinearLayout>
