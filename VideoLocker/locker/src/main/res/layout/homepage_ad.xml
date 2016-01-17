@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/adFragment"
-        android:name="com.hkm.editorial.pages.content.AdFragment"
+        android:name="com.hkm.downloadmedialocker.pages.content.AdFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />

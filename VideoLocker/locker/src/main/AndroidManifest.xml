@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.hkm.editorial">
+    package="com.hkm.downloadmedialocker">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Used to load images from the gallery content provider. -->
@@ -17,7 +17,7 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <!-- http://lethargicpanda.tumblr.com/post/103432366121/use-gradle-manifest-merger-to-workaround -->
     <permission
-        android:name="com.hkm.editorial.permission.C2D_MESSAGE"
+        android:name="com.hkm.downloadmedialocker.permission.C2D_MESSAGE"
         android:protectionLevel="signature"
         tools:node="remove" />
 
@@ -25,14 +25,14 @@
 
     <!-- parse.com push notification end -->
     <application
-        android:name=".life.LifeCycleApp"
+        android:name="com.hkm.downloadmedialocker.life.LifeCycleApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/defaultShowTimeSlidingMenuTheme"
         tools:replace="icon, label">
         <activity
-            android:name=".HBSplash"
+            android:name="com.hkm.downloadmedialocker.HBSplash"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -47,13 +47,13 @@
             android:theme="@android:style/Theme.Translucent" />
 
         <activity
-            android:name=".MainHome"
+            android:name="com.hkm.downloadmedialocker.MainHome"
             android:configChanges="keyboard|keyboardHidden|uiMode|smallestScreenSize"
             android:label="@string/app_name"
             android:theme="@style/solidNavigationBar" />
 
         <activity
-            android:name=".adInterstitual.InterstitialAd"
+            android:name="com.hkm.downloadmedialocker.adInterstitual.InterstitialAd"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
 
@@ -65,7 +65,7 @@
             -->
         </activity>
         <activity
-            android:name=".Single"
+            android:name="com.hkm.downloadmedialocker.Single"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/ArticlePageTheme"
             android:uiOptions="splitActionBarWhenNarrow">

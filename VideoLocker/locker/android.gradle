@@ -34,7 +34,7 @@ android {
     }
     productFlavors {
         publishing_package {
-            applicationId "com.hypebeast.editorial"
+            applicationId "com.medialockerhkm"
             versionName defaultConfig.versionName
             signingConfig signingConfigs.sign_default
             buildConfigField "String", "PARSE_APPLICATION_ID", "\"${configConstants.PARSE_APPLICATION_ID}\""
@@ -48,7 +48,7 @@ android {
             buildConfigField "String", "DFP_BANNER_UNIT_ID", "\"${configConstants.DFP_BANNER_UNIT_ID}\""
         }
         native_test {
-            applicationId "com.hb.editoraltest"
+            applicationId "com.medialockerhkm.test"
             versionName defaultConfig.versionName
             signingConfig signingConfigs.sign_default
             buildConfigField "String", "PARSE_APPLICATION_ID", "\"${configConstants.PARSE_APPLICATION_ID}\""
