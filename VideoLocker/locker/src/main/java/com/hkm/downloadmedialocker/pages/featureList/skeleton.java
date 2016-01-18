@@ -13,7 +13,7 @@ import com.hkm.downloadmedialocker.R;
 import com.hkm.downloadmedialocker.adInterstitual.ListAd;
 import com.hkm.downloadmedialocker.life.Config;
 import com.hkm.downloadmedialocker.life.EBus;
-import com.hypebeast.sdk.api.exception.ApiException;
+import com.hkm.vdlsdk.exception.ApiException;
 import com.marshalchen.ultimaterecyclerview.AdmobAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
@@ -163,7 +163,7 @@ public abstract class skeleton extends basicfeed {
     }
 
 
-    protected abstract void onLoadMore(final int requestType, final int currentpage, final int posts_per_page) throws ApiException;
+    protected abstract void onLoadMore(final int requestType, final int currentpage, final int posts_per_page) throws ApiException, ApiException;
 
 
     protected Paint getsolid() {

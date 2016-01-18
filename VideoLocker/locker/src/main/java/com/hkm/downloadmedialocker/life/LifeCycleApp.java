@@ -4,6 +4,7 @@ import android.app.Application;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 
+import com.ftinc.kit.util.Utils;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.hkm.disqus.api.ApiClient;
@@ -12,7 +13,6 @@ import com.hkm.downloadmedialocker.BuildConfig;
 import com.hkm.downloadmedialocker.R;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
-import com.r0adkll.deadskunk.utils.Utils;
 import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrListener;
 import com.r0adkll.slidr.model.SlidrPosition;
@@ -84,7 +84,6 @@ public class LifeCycleApp extends Application {
                 .build();*/
     }
 
-    public static final String base_en = "http://hypebeast.com";
     private void initializeDisQus() {
         try {
         //    disqusConfigurations = new ApiConfig(BuildConfig.DISQUS_API_KEY,
@@ -96,20 +95,6 @@ public class LifeCycleApp extends Application {
         }
     }
 
-
-    /*
-        public AuthMgr getManager() {
-            return authmanager;
-        }
-
-        public ApiClient getDisqusClient() {
-            if (disqusClient == null) {
-                disqusClient = new ApiClient(disqusConfigurations);
-                authmanager = disqusClient.createAuthenticationManager(this);
-            }
-            return disqusClient;
-        }
-    */
 
     public ApiConfig getConfiguration() {
         return disqusConfigurations;

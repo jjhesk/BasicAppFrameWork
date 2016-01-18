@@ -6,9 +6,6 @@ import android.os.Bundle;
 import com.hkm.downloadmedialocker.life.EBus;
 import com.hkm.downloadmedialocker.life.TabUntil;
 import com.hkm.slider.SliderLayout;
-import com.hypebeast.sdk.api.model.hbeditorial.configbank;
-import com.hypebeast.sdk.application.hypebeast.ConfigurationSync;
-import com.hypebeast.sdk.clients.HBEditorialClient;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -27,7 +24,7 @@ public class HomePagePullDownList extends home_slider {
     protected void loadSlider(SliderLayout vslid) {
         super.loadSlider(vslid);
         try {
-            HBEditorialClient client = HBEditorialClient.getInstance(getActivity().getApplicationContext());
+         /*   HBEditorialClient client = HBEditorialClient.getInstance(getActivity().getApplicationContext());
             configbank mConfiguration =
                     ConfigurationSync
                             .getInstance()
@@ -37,7 +34,7 @@ public class HomePagePullDownList extends home_slider {
                 setup_gallery(vslid, mConfiguration.featurebanner);
             } else {
                 setup_double_faces(vslid, mConfiguration.featurebanner);
-            }
+            }*/
         } catch (Exception e) {
             e.printStackTrace();
         }

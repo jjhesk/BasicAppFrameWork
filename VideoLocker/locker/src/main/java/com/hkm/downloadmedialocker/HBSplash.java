@@ -3,11 +3,8 @@ package com.hkm.downloadmedialocker;
 import android.content.Intent;
 
 import com.hkm.advancedtoolbar.Util.ErrorMessage;
-import com.hkm.downloadmedialocker.life.HBUtil;
-import com.hypebeast.sdk.api.model.hbeditorial.Foundation;
-import com.hypebeast.sdk.application.Splash;
-import com.hypebeast.sdk.application.hypebeast.ConfigurationSync;
-import com.hypebeast.sdk.application.hypebeast.sync;
+import com.hkm.videosdkui.application.Splash;
+
 
 /**
  * Created by hesk on 2/9/15.
@@ -32,7 +29,7 @@ public class HBSplash extends Splash {
 
     @Override
     protected void synchronizeData() {
-        ConfigurationSync.with(getApplication(), new sync() {
+    /*    ConfigurationSync.with(getApplication(), new sync() {
             @Override
             public void initFailure(String message) {
                 ErrorMessage.alert(message, getFragmentManager(), new Runnable() {
@@ -53,7 +50,14 @@ public class HBSplash extends Splash {
                 startActivity(d);
                 finish();
             }
-        });
+        });*/
+
+
+
+        Intent d = new Intent(HBSplash.this, MainHome.class);
+        d.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(d);
+        finish();
     }
 
 

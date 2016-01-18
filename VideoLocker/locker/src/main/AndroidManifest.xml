@@ -64,7 +64,7 @@
              </intent-filter>
             -->
         </activity>
-        <activity
+       <!-- <activity
             android:name="com.hkm.downloadmedialocker.Single"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/ArticlePageTheme"
@@ -81,7 +81,7 @@
                 <data android:host="hk.hypebeast.com" />
                 <data android:scheme="http" />
             </intent-filter>
-        </activity>
+        </activity>-->
 
         <!-- This meta-data tag is required to use Google Play Services. -->
         <meta-data

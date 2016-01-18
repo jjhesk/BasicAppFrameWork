@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.hkm.downloadmedialocker.R;
 import com.hkm.downloadmedialocker.life.HBUtil;
-import com.hypebeast.sdk.api.exception.ApiException;
+import com.hkm.vdlsdk.exception.ApiException;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.quickAdapter.easyRegularAdapter;
 import com.marshalchen.ultimaterecyclerview.quickAdapter.simpleAdmobAdapter;

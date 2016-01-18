@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 
 import com.hkm.downloadmedialocker.R;
 import com.hkm.downloadmedialocker.life.HBUtil;
-import com.hkm.downloadmedialocker.pages.catelog.template_home_list;
 import com.hkm.downloadmedialocker.pages.featureList.skeleton;
 import com.hkm.downloadmedialocker.viewpagerfix.FixedSpeedScroller;
 import com.hkm.slider.Animations.DescriptionAnimation;
@@ -22,7 +21,6 @@ import com.hkm.slider.SliderTypes.AdvancedTextSliderView;
 import com.hkm.slider.SliderTypes.BaseSliderView;
 import com.hkm.slider.SliderTypes.CompactFrameSliderView;
 import com.hkm.slider.TransformerL;
-import com.hypebeast.sdk.api.model.hbeditorial.Slide;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v13.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v13.FragmentPagerItems;
@@ -94,8 +92,8 @@ public class home_slider extends homeBase implements BaseSliderView.OnSliderClic
                 /**
                  * adding the fragment of the list template into the tabs
                  */
-                .add(R.string.recent, template_home_list.class, skeleton.con_latest(R.string.recent))
-                .add(R.string.popular, template_home_list.class, skeleton.con_cate("popular"))
+                // .add(R.string.recent, template_home_list.class, skeleton.con_latest(R.string.recent))
+                //   .add(R.string.popular, template_home_list.class, skeleton.con_cate("popular"))
                 .create());
         return adp;
     }
@@ -156,6 +154,7 @@ public class home_slider extends homeBase implements BaseSliderView.OnSliderClic
             HBUtil.slide_uri_check(LoyalUtil.getUri(b), getActivity());
         }
     }
+/*
 
     protected void setup_double_faces(final SliderLayout mslide, final List<Slide> list) throws Exception {
         Iterator<Slide> itb = list.iterator();
@@ -225,6 +224,7 @@ public class home_slider extends homeBase implements BaseSliderView.OnSliderClic
         HBUtil.startToReveal(rlayout, 1000);
     }
 
+*/
 
     public void triggerPullDown() {
         if (mDragLayout.getState() == DragTopLayout.PanelState.COLLAPSED) {

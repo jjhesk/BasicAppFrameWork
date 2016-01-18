@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.hkm.downloadmedialocker.R;
 import com.hkm.downloadmedialocker.life.HBUtil;
-import com.hypebeast.sdk.api.exception.ApiException;
+import com.hkm.vdlsdk.exception.ApiException;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.quickAdapter.easyRegularAdapter;
 import com.marshalchen.ultimaterecyclerview.quickAdapter.simpleAdmobAdapter;
@@ -52,7 +52,6 @@ public abstract class featureListFragment<T> extends skeleton {
         Log.d(TAG, route + " now");
         HBUtil.startNewArticle(route, getActivity());
     }
-
 
     protected abstract void onLoadMore(final int requestType, final int currentpage, final int pagelimit) throws ApiException;
 

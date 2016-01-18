@@ -9,13 +9,13 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 
+import com.ftinc.kit.util.Utils;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.hkm.downloadmedialocker.BuildConfig;
 import com.marshalchen.ultimaterecyclerview.ui.AdGoogleDisplaySupport;
-import com.r0adkll.deadskunk.utils.Utils;
 
 /**
  * Created by hesk on 12/11/15.

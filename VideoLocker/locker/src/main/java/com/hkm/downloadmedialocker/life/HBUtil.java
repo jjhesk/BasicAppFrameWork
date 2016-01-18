@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
-import com.hypebeast.sdk.clients.HBEditorialClient;
 
 import java.util.Locale;
 
@@ -319,7 +318,7 @@ public class HBUtil {
         }
     }
 
-
+/*
     public static void setApplicationLanguageBase(String code_language, Application context, HBEditorialClient client) {
 
         Locale name = getLocale(code_language);
@@ -329,5 +328,5 @@ public class HBUtil {
         context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
         client.saveLanguage(code_language);
 
-    }
+    }*/
 }

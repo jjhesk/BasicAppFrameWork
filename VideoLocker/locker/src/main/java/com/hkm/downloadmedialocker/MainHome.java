@@ -3,20 +3,14 @@ package com.hkm.downloadmedialocker;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 
 import com.hkm.advancedtoolbar.V5.BeastBar;
 import com.hkm.downloadmedialocker.life.EBus;
 import com.hkm.downloadmedialocker.life.RenderTrigger;
 import com.hkm.downloadmedialocker.pages.catelog.PageList;
-import com.hkm.downloadmedialocker.pages.catelog.template_cate;
-import com.hkm.downloadmedialocker.pages.catelog.template_video_list;
 import com.hkm.downloadmedialocker.pages.content.NotFound;
-import com.hkm.downloadmedialocker.pages.content.HomePagePullDownList;
-import com.hkm.downloadmedialocker.pages.catelog.template_general_list;
 import com.hkm.downloadmedialocker.pages.content.RecentActivities;
 import com.hkm.downloadmedialocker.pages.featureList.skeleton;
 import com.hkm.downloadmedialocker.pages.preference.userpreference;
@@ -24,10 +18,6 @@ import com.hkm.layout.App.WeiXinHost;
 import com.hkm.layout.Dialog.ExitDialog;
 import com.hkm.layout.Menu.TabIconView;
 import com.hkm.layout.WeiXinTabHost;
-import com.hypebeast.sdk.api.model.hbeditorial.Menuitem;
-import com.hypebeast.sdk.api.model.hbeditorial.configbank;
-import com.hypebeast.sdk.application.hypebeast.ConfigurationSync;
-import com.hypebeast.sdk.clients.HBEditorialClient;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -65,7 +55,7 @@ public class MainHome extends WeiXinHost<Fragment> {
         try {
             Bundle b = data.getExtras();
             final String url_endpoint = b.getString(KEYURL);
-            setFragment(template_general_list.B(skeleton.general(url_endpoint)), "Tags#");
+          //  setFragment(template_general_list.B(skeleton.general(url_endpoint)), "Tags#");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,8 +119,6 @@ public class MainHome extends WeiXinHost<Fragment> {
         //unregisterReceiver();
     }
 
-    private HBEditorialClient client;
-    private configbank overhead_data;
     private BeastBar mBeastWorker;
     private int tab_position = 0;
     private boolean tabLock = false, enable_back_button = false;
@@ -139,8 +127,9 @@ public class MainHome extends WeiXinHost<Fragment> {
     @Override
     protected void afterInitContentViewToolBar() {
         try {
-            client = HBEditorialClient.getInstance(this);
-            overhead_data = ConfigurationSync.getInstance().getByLanguage(client.getLanguagePref());
+         //   client = HBEditorialClient.getInstance(this);
+         //   overhead_data = ConfigurationSync.getInstance().getByLanguage(client
+         //   .getLanguagePref());
             setFragment(rezHome(), "home");
         } catch (Exception error) {
             // to handle out of memory issue
@@ -171,7 +160,7 @@ public class MainHome extends WeiXinHost<Fragment> {
     private void renderOriginalTabByPosition(final int position) {
         mBeastWorker.setBackIconFunc(null);
         enable_back_button = false;
-        Menuitem chosen = overhead_data.nav_bar.get(position);
+       /* Menuitem chosen = overhead_data.nav_bar.get(position);
         if (chosen.getName().equalsIgnoreCase("newsfeed")) {
             mBeastWorker.showMainLogo();
             setFragment(rezHome(), "#newsfeed");
@@ -187,7 +176,7 @@ public class MainHome extends WeiXinHost<Fragment> {
             userpreference h = new userpreference();
             setFragment(h, "#preference");
             mBeastWorker.setActionTitle(getString(R.string.action_settings));
-        }
+        }*/
     }
 
     protected void headerPosition(int ktab) {
@@ -198,12 +187,12 @@ public class MainHome extends WeiXinHost<Fragment> {
 
     @Override
     protected List<TabIconView.Icon> getCustomTabItems() {
-        Iterator<Menuitem> m = overhead_data.nav_bar.iterator();
+ //       Iterator<Menuitem> m = overhead_data.nav_bar.iterator();
         List<TabIconView.Icon> item = new ArrayList<>();
-        while (m.hasNext()) {
+    /*    while (m.hasNext()) {
             Menuitem menu = m.next();
             item.add(ic_button(menu.getName(), menu.getDisplay()));
-        }
+        }*/
         return item;
     }
 
@@ -237,8 +226,8 @@ public class MainHome extends WeiXinHost<Fragment> {
 
     @Subscribe
     public void RouteToPage(PageList b) {
-        template_general_list list = template_general_list.B(b.getTransferBundle());
-        setFragment(list, b.getTitle());
+     //   template_general_list list = template_general_list.B(b.getTransferBundle());
+     //   setFragment(list, b.getTitle());
         make_menu_back_button_goto_main();
     }
 
@@ -246,7 +235,7 @@ public class MainHome extends WeiXinHost<Fragment> {
     @Subscribe
     public void RenderInit(RenderTrigger b) {
         try {
-            overhead_data = ConfigurationSync.getInstance().getByLanguage(client.getLanguagePref());
+        //    overhead_data = ConfigurationSync.getInstance().getByLanguage(client.getLanguagePref());
             invalidateBottomMenu();
         } catch (Exception e) {
             e.printStackTrace();

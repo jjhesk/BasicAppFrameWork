@@ -13,19 +13,18 @@ import com.hkm.downloadmedialocker.R;
 import com.hkm.downloadmedialocker.life.EBus;
 import com.hkm.downloadmedialocker.life.HBUtil;
 import com.hkm.downloadmedialocker.life.RenderTrigger;
-import com.hypebeast.sdk.clients.HBEditorialClient;
 
 /**
  * Created by hesk on 12/1/16.
  */
 public class userpreference extends PreferenceFragment {
     private ListPreference mListPreference;
-    private HBEditorialClient client;
+  //  private HBEditorialClient client;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        client = HBEditorialClient.getInstance(getActivity().getApplicationContext());
+       // client = HBEditorialClient.getInstance(getActivity().getApplicationContext());
         addPreferencesFromResource(R.xml.setup_option_list);
     }
 
@@ -73,15 +72,15 @@ public class userpreference extends PreferenceFragment {
     public void setSwitchExistingClientFromPreferencePanel(String mLanguage) {
 
         if (mLanguage.equals("en")) {
-            client.setLanguageBase(HBEditorialClient.BASE_EN);
+           // client.setLanguageBase(HBEditorialClient.BASE_EN);
         } else if (mLanguage.equals("zh_CN")) {
-            client.setLanguageBase(HBEditorialClient.BASE_CN);
+          //  client.setLanguageBase(HBEditorialClient.BASE_CN);
         } else if (mLanguage.equals("ja")) {
-            client.setLanguageBase(HBEditorialClient.BASE_JP);
+          //  client.setLanguageBase(HBEditorialClient.BASE_JP);
         } else if (mLanguage.equals("zh_TW")) {
-            client.setLanguageBase(HBEditorialClient.BASE_CN);
+          //  client.setLanguageBase(HBEditorialClient.BASE_CN);
         }
-        HBUtil.setApplicationLanguageBase(mLanguage, getActivity().getApplication(), client);
+      //  HBUtil.setApplicationLanguageBase(mLanguage, getActivity().getApplication(), client);
         EBus.getInstance().post(new RenderTrigger());
     }
 

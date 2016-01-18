@@ -25,8 +25,6 @@ import android.widget.ProgressBar;
 import com.hkm.downloadmedialocker.R;
 import com.hkm.downloadmedialocker.pages.adapters.shareactionSpline;
 import com.hkm.downloadmedialocker.life.Config;
-import com.hypebeast.sdk.api.model.hbeditorial.PostsObject;
-import com.hypebeast.sdk.api.model.hbeditorial.SingleArticle;
 import com.marshalchen.ultimaterecyclerview.ItemTouchListenerAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
@@ -55,7 +53,7 @@ public class ShareArticle extends Fragment {
     private ItemTouchListenerAdapter itemInteraction;
 
     private List<ResolveInfo> list;
-    private PostsObject article;
+    //  private PostsObject article;
 
 
     public ShareArticle() {
@@ -65,7 +63,7 @@ public class ShareArticle extends Fragment {
         void postResults(shareactionSpline result);
     }
 
-    public interface bindArticleData {
+    /*public interface bindArticleData {
         SingleArticle bind();
     }
 
@@ -73,7 +71,7 @@ public class ShareArticle extends Fragment {
 
     public void setBindShareObject(bindArticleData share) {
         sharer = share;
-    }
+    }*/
 
     protected void doneInitialLoading() {
         uProgressbar.animate().alpha(0).withEndAction(new Runnable() {
@@ -228,15 +226,17 @@ public class ShareArticle extends Fragment {
     }
 
     private String getShareContent() {
-        SingleArticle article = null;
+      /* SingleArticle article = null;
         if (sharer != null) {
-            article = sharer.bind();
+         article = sharer.bind();
         } else {
             return "error nothing can be shared";
         }
-        String title = article.single_article_title;
-        String link = article._links.self.getHref();
+      String title = article.single_article_title;
+       String link = article._links.self.getHref();
         return "I just read an article about " + title + ", check it out @ " + link;
+        */
+        return "";
     }
 
     private void withevents(final View v) {
