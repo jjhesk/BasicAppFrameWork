@@ -17,6 +17,7 @@ import com.hkm.downloadmedialocker.pages.catelog.template_video_list;
 import com.hkm.downloadmedialocker.pages.content.NotFound;
 import com.hkm.downloadmedialocker.pages.content.HomePagePullDownList;
 import com.hkm.downloadmedialocker.pages.catelog.template_general_list;
+import com.hkm.downloadmedialocker.pages.content.RecentActivities;
 import com.hkm.downloadmedialocker.pages.featureList.skeleton;
 import com.hkm.downloadmedialocker.pages.preference.userpreference;
 import com.hkm.layout.App.WeiXinHost;
@@ -99,9 +100,9 @@ public class MainHome extends WeiXinHost<Fragment> {
 
     }
 
-    private HomePagePullDownList rezHome() {
-        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final HomePagePullDownList mHome = HomePagePullDownList.withAd(sharedPreferences.getBoolean("ad_display", true));
+    private RecentActivities rezHome() {
+        // final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final RecentActivities mHome = RecentActivities.newInstance(R.drawable.ic_get_pocket);
         return mHome;
     }
 

@@ -51,7 +51,7 @@ public class TabIconView extends ImageView {
     }
 
     public static Icon newVectorIconTab(String label, int normal, int active) {
-        Icon c = new Icon(label, normal, active);
+        Icon c = new Icon(label, active, normal);
         c.setVectorEnabled();
         return c;
     }

@@ -3,8 +3,11 @@ package com.hkm.layout.App;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.AnimRes;
+import android.support.annotation.AnimatorRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -20,6 +23,7 @@ import com.hkm.layout.R;
  * Created by hesk on 21/8/15.
  */
 public abstract class fundamental<F> extends AppCompatActivity {
+
 
     /**
      * there are some presets for the main layout configurations
@@ -74,6 +78,7 @@ public abstract class fundamental<F> extends AppCompatActivity {
         }
     }
 
+    private boolean enable_custom_transition = false;
     protected F currentFragmentNow;
 
     /**
@@ -106,7 +111,7 @@ public abstract class fundamental<F> extends AppCompatActivity {
     }
 
     public void removeFragment(F fragment) {
-        if (fragment instanceof android.app.Fragment) {
+        if (fragment instanceof Fragment) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             if (fragment != null) {
                 transaction.remove((Fragment) fragment);
@@ -123,6 +128,36 @@ public abstract class fundamental<F> extends AppCompatActivity {
                 fragment = null;
             }
         }
+    }
+
+    @AnimRes
+    private int transition_enter, transition_exit;
+
+    protected void enableFragmentTransition() {
+        enable_custom_transition = true;
+    }
+
+    protected void enableFragmentTransition(final @AnimRes int enter, final @AnimRes int out) {
+        enable_custom_transition = true;
+        transition_enter = enter;
+        transition_exit = out;
+    }
+
+    @AnimRes
+    private int enter() {
+        if (transition_enter != 0)
+            return transition_enter;
+        else
+            return R.anim.back_in_from_right;
+    }
+
+
+    @AnimRes
+    private int out() {
+        if (transition_exit != 0)
+            return transition_exit;
+        else
+            return R.anim.back_out_to_right;
     }
 
     /**
@@ -142,24 +177,43 @@ public abstract class fundamental<F> extends AppCompatActivity {
             if (oldFragment != null && oldFragment != fragment)
                 ft.remove((android.support.v4.app.Fragment) oldFragment);
 
-            ft.replace(targetHomeFrame(), (android.support.v4.app.Fragment) fragment).commit();
-        } else if (fragment instanceof android.app.Fragment) {
+            ft.replace(targetHomeFrame(), (android.support.v4.app.Fragment) fragment);
+
+            if (enable_custom_transition) {
+                ft.setCustomAnimations(enter(), out());
+            }
+
+            ft.commit();
+        } else if (fragment instanceof Fragment) {
             if (oldFragment instanceof android.support.v4.app.Fragment)
                 throw new RuntimeException("You should use only one type of Fragment");
 
-            android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
             if (oldFragment != null && fragment != oldFragment)
-                ft.remove((android.app.Fragment) oldFragment);
+                ft.remove((Fragment) oldFragment);
 
-            ft.replace(targetHomeFrame(), (android.app.Fragment) fragment).commit();
+            ft.replace(targetHomeFrame(), (Fragment) fragment);
+
+            if (enable_custom_transition) {
+                ft.setCustomAnimations(enter(), out());
+            }
+
+            ft.commit();
         } else if (fragment instanceof android.support.v4.app.Fragment) {
-            if (oldFragment instanceof android.app.Fragment)
+            if (oldFragment instanceof Fragment)
                 throw new RuntimeException("You should use only one type of Fragment");
 
             android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             if (oldFragment != null && oldFragment != fragment)
                 ft.remove((android.support.v4.app.Fragment) oldFragment);
-            ft.replace(targetHomeFrame(), (android.support.v4.app.Fragment) fragment).commit();
+            ft.replace(targetHomeFrame(), (android.support.v4.app.Fragment) fragment);
+
+            if (enable_custom_transition) {
+                ft.setCustomAnimations(enter(), out());
+            }
+
+            ft.commit();
+
         } else
             throw new RuntimeException("Fragment must be android.app.Fragment or android.support.v4.app.Fragment");
 
@@ -298,6 +352,7 @@ public abstract class fundamental<F> extends AppCompatActivity {
             Log.d("not work", e.getMessage());
             errorFromOnCreate(e);
         }
+
     }
 
     protected void errorFromOnCreate(Exception e) {

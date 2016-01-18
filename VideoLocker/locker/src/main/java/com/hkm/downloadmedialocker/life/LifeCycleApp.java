@@ -18,7 +18,7 @@ import com.r0adkll.slidr.model.SlidrListener;
 import com.r0adkll.slidr.model.SlidrPosition;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
-import retrofit.RestAdapter;
+//import retrofit.RestAdapter;
 
 /**
  * Created by hesk on 2/2/15.
@@ -87,9 +87,10 @@ public class LifeCycleApp extends Application {
     public static final String base_en = "http://hypebeast.com";
     private void initializeDisQus() {
         try {
-            disqusConfigurations = new ApiConfig(BuildConfig.DISQUS_API_KEY, RestAdapter.LogLevel.BASIC);
-            disqusConfigurations.setApiSecret(BuildConfig.DISQUS_SECRET);
-            disqusConfigurations.setRedirectUri(base_en);
+        //    disqusConfigurations = new ApiConfig(BuildConfig.DISQUS_API_KEY,
+       // RestAdapter.LogLevel.BASIC);
+        //    disqusConfigurations.setApiSecret(BuildConfig.DISQUS_SECRET);
+        //    disqusConfigurations.setRedirectUri(base_en);
         } catch (Exception e) {
             e.printStackTrace();
         }

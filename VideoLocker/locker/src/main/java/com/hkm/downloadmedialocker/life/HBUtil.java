@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
-import com.hkm.downloadmedialocker.Single;
 import com.hypebeast.sdk.clients.HBEditorialClient;
 
 import java.util.Locale;
@@ -82,11 +81,11 @@ public class HBUtil {
      */
 
     public static void startNewArticle(final String url, final Activity activity) {
-        final Intent intent = new Intent(activity, Single.class);
-        Bundle b = new Bundle();
-        b.putString(Single.SURL, url);
-        intent.putExtras(b);
-        activity.startActivity(intent);
+       // final Intent intent = new Intent(activity, Single.class);
+      //  Bundle b = new Bundle();
+      //  b.putString(Single.SURL, url);
+      //  intent.putExtras(b);
+      //  activity.startActivity(intent);
     }
 
     /**
