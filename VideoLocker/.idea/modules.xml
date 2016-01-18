@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/VideoLocker.iml" filepath="$PROJECT_DIR$/VideoLocker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/locker/locker.iml" filepath="$PROJECT_DIR$/locker/locker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dllocker/dllocker.iml" filepath="$PROJECT_DIR$/dllocker/dllocker.iml" />
     </modules>
   </component>
 </project>

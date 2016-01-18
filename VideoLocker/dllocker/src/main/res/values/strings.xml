@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="exit_alert">You are about to exit this app. Do you want?</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_categories">Categories</string>
+    <string name="action_video">Videos</string>
+    <string name="action_tv">TV</string>
+    <string name="action_search">Search</string>
+    <string name="setting_time_description">The refreshing moment within minutes. Zero = OFF. MAX = 20</string>
+    <string name="time_interval">Refreshing time</string>
+    <string name="lang_title">Language</string>
+    <string name="lang_desc">Selection your reading language</string>
+    <string name="recent">Recent</string>
+    <string name="popular">Popular</string>
+    <string name="editorial">Editorial</string>
+    <string name="fashion">Fashion</string>
+    <string name="autos">Autos</string>
+
+    <string name="waitinginput">Type your comment in here.</string>
+
+</resources>

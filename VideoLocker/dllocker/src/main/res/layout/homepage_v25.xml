@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<github.chenupt.dragtoplayout.DragTopLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:MaterialTabHost="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:slide="http://schemas.android.com/tools"
+
+    android:id="@+id/drag_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_background">
+
+    <!--top view-->
+    <LinearLayout
+        android:id="@+id/top_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height">
+
+            <com.hkm.slider.SliderLayout
+                android:id="@+id/slider"
+                slide:auto_cycle="true"
+                slide:lns_use_presentation="Dots"
+                slide:pager_animation="Default"
+                slide:slide_dot_limit="5"
+                slide:slider_side_buttons="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider" />
+    </LinearLayout>
+
+    <!--content view-->
+    <LinearLayout
+        android:id="@+id/drag_content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- <it.neokree.materialtabs.MaterialTabHost
+             android:id="@+id/materialTabHost"
+             android:layout_width="match_parent"
+             android:layout_height="48dp"
+             android:background="@drawable/tab_host_bottom_line"
+             MaterialTabHost:advtabs_accentColor="@color/tabHostAccentColor"
+             MaterialTabHost:advtabs_hasIcons="false"
+             MaterialTabHost:advtabs_materialTabsPrimaryColor="@color/tabHostBackgroundColor"
+             MaterialTabHost:advtabs_nonFixTabsCountStart="5"
+             MaterialTabHost:advtabs_textColor="@color/tabHostTextColor" />-->
+        <!--  <com.astuetz.PagerSlidingTabStrip
+              android:id="@+id/materialTabHost"
+              android:layout_width="match_parent"
+              android:layout_height="48dip"
+              MaterialTabHost:pstsDividerColor="@color/divider"
+              MaterialTabHost:pstsIndicatorHeight="2dp"
+              MaterialTabHost:pstsShouldExpand="false"
+              MaterialTabHost:pstsTextAllCaps="true"
+              MaterialTabHost:pstsUnderlineHeight="1dp" />-->
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:background="@android:color/white"
+            android:padding="0dp" />
+    </LinearLayout>
+</github.chenupt.dragtoplayout.DragTopLayout>

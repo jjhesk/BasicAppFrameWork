@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--  <PreferenceCategory android:title="Extras">
+
+          <SwitchPreference
+              android:key="ad_display"
+              android:summaryOff="Ad is Off"
+              android:summaryOn="Ad is On"
+              android:switchTextOff="Not Display"
+              android:switchTextOn="Display"
+              android:title="Switch for in-app AD display from DFP"
+              android:defaultValue="true" />
+
+      </PreferenceCategory>-->
+    <!--
+        <Preference
+            android:key="wifi_signal_color"
+            android:title="WiFi Signal Color">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.example.android.signalwidget.colorpicker.PickerActivity"
+                android:targetPackage="com.example.android.signalwidget" />
+        </Preference>
+
+        <Preference
+            android:key="cell_signal_color"
+            android:title="Cell Signal Color">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.example.android.signalwidget.colorpicker.PickerActivity"
+                android:targetPackage="com.example.android.signalwidget" />
+        </Preference>-->
+
+
+    <PreferenceCategory
+        android:key="language"
+        android:title="Language Preference">
+        <ListPreference
+            android:entries="@array/language_entries"
+            android:entryValues="@array/language_values"
+            android:key="PREF_LIST_LANG"
+            android:summary="@string/lang_desc"
+            android:title="@string/lang_title" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

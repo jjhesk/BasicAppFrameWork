@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pixlui="http://schemas.android.com/apk/com.neopixl.pixlui"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bottom_actionbar_height">
+
+    <RelativeLayout
+        android:id="@+id/bottomholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <com.neopixl.pixlui.components.textview.TextView
+            android:id="@+id/barTitle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_actionbar_height"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="open it again"
+            android:textSize="@dimen/md_title_textsize"
+            android:textStyle="bold"
+            pixlui:typeface="Montserrat-Regular.ttf" />
+
+        <ImageButton
+            android:id="@+id/cross_close"
+            style="@style/rippleButton"
+            android:layout_width="@dimen/bottom_actionbar_height"
+            android:layout_height="@dimen/bottom_actionbar_height"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/barTitle"
+            android:src="@mipmap/cross_mi" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/topcommentbarholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="1.0">
+
+
+        <RelativeLayout
+            android:id="@+id/comment_enabled"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+
+
+            <ImageButton
+                android:id="@+id/open_comment"
+                style="@style/rippleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_comment" />
+
+            <com.neopixl.pixlui.components.textview.TextView
+                android:id="@+id/comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_vertical"
+                android:paddingBottom="4dp"
+                pixlui:typeface="Montserrat-Regular.ttf" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/share_articles"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+
+            <ImageButton
+                android:id="@+id/share_button_ssn"
+                style="@style/rippleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_share" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

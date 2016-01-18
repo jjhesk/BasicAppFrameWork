@@ -1,0 +1,57 @@
+android {
+    compileSdkVersion targetSdk
+    buildToolsVersion buildTools
+
+    def configConstants = new Properties()
+    def Props = file("applaunch.properties")
+    if (Props.exists()) {
+        Props.withInputStream {
+            stream -> configConstants.load(stream)
+        }
+    }
+    defaultConfig {
+        applicationId "com.hkm.dllocker"
+        minSdkVersion 17
+        targetSdkVersion targetSdk
+        versionCode 10
+        versionName '0.1.0'
+        multiDexEnabled = false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+    }
+    signingConfigs {
+        sign_default {
+            keyAlias 'hypebeasteditorial'
+            keyPassword 'kmk12345'
+            storeFile file('/Users/hesk/Documents/certs/notupdatedGhesk.keystore')
+            storePassword 'kmk12345'
+        }
+    }
+    productFlavors {
+        publishing_package {
+            applicationId "com.hkm.dllocker"
+            versionName defaultConfig.versionName
+            signingConfig signingConfigs.sign_default
+            buildConfigField "String", "PARSE_APPLICATION_ID", "\"${configConstants.PARSE_APPLICATION_ID}\""
+            buildConfigField "String", "PARSE_CLIENT_KEY", "\"${configConstants.PARSE_CLIENT_KEY}\""
+            buildConfigField "String", "DISQUS_API_KEY", "\"${configConstants.DISQUS_API_KEY}\""
+            buildConfigField "String", "DISQUS_SECRET", "\"${configConstants.DISQUS_SECRET}\""
+            buildConfigField "String", "GOOGLE_TRACKER", "\"${configConstants.GOOGLE_TRACKER}\""
+            buildConfigField "String", "DFP_INTER_ID", "\"${configConstants.DFP_INTER_ID}\""
+            buildConfigField "String", "DFP_LIST_UNIT_ID", "\"${configConstants.DFP_LIST_UNIT_ID}\""
+            buildConfigField "String", "CUSTOM_MENU", "\"${configConstants.CUSTOM_MENU}\""
+            buildConfigField "String", "DFP_BANNER_UNIT_ID", "\"${configConstants.DFP_BANNER_UNIT_ID}\""
+        }
+    }
+    lintOptions {
+        disable 'MissingPrefix'
+    }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lang_title">語言</string>
+    <string name="popular">流行</string>
+    <string name="recent">最近</string>
+    <string name="time_interval">刷新時間</string>
+    <string name="editorial">社論</string>
+    <string name="fashion">時尚</string>
+    <string name="autos">汽車</string>
+    <string name="action_tv">電視</string>
+    <string name="waitinginput">在這裡鍵入您的評論。</string>
+    <string name="action_settings">設置</string>
+    <string name="setting_time_description">幾分鐘之內清爽時刻。零= OFF 。 MAX = 20</string>
+    <string name="action_search">搜索</string>
+    <string name="exit_alert">您是否要退出該應用程序。 確認？</string>
+    <string name="lang_desc">選擇你正在閱讀的語言</string>
+    <string name="action_categories">分類</string>
+    <string name="action_video">視像</string>
+</resources>
