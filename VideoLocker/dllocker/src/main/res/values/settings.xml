@@ -4,7 +4,7 @@
     <!-- <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>-->
     <string name="banner_ad_unit_id" translatable="false">/1015938/Hypebeast_App_320x50</string>
     <string name="parse_application_id" translatable="false">lSt2ufdfi7bCA2yVesPdG2GKQ3IYDJULy6FpkVeN</string>
-    <string name="app_name" translatable="false">Hypebeast</string>
+    <string name="app_name" translatable="false">VideoShareLin</string>
 
     <string name="hypebeast_article" translatable="false">HB Article Reader</string>
 

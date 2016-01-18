@@ -2,18 +2,29 @@ package com.hkm.dllocker;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.hkm.advancedtoolbar.V5.BeastBar;
 import com.hkm.dllocker.content.RecentActivities;
+import com.hkm.dllocker.module.DLUtil;
+import com.hkm.dllocker.module.EBus;
+import com.hkm.dllocker.module.ProcessOrder;
 import com.hkm.layout.App.WeiXinHost;
 import com.hkm.layout.Dialog.ExitDialog;
 import com.hkm.layout.Menu.TabIconView;
 import com.hkm.layout.WeiXinTabHost;
+import com.hkm.vdlsdk.Util;
+import com.hkm.vdlsdk.client.FBdownNet;
+import com.hkm.vdlsdk.client.SoundCloud;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -97,7 +108,8 @@ public class MainHome extends WeiXinHost<Fragment> {
     @Override
     public void onStart() {
         super.onStart();
-        //  EBus.getInstance().register(this);
+        clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        EBus.getInstance().register(this);
     }
 
     /**
@@ -108,7 +120,7 @@ public class MainHome extends WeiXinHost<Fragment> {
     @Override
     public void onStop() {
         super.onStop();
-        //     EBus.getInstance().unregister(this);
+        EBus.getInstance().unregister(this);
         //unregisterReceiver();
     }
 
@@ -124,6 +136,7 @@ public class MainHome extends WeiXinHost<Fragment> {
             //   overhead_data = ConfigurationSync.getInstance().getByLanguage(client
             //   .getLanguagePref());
             setFragment(rezHome(), "home");
+            DLUtil.startFromSharing(getIntent());
         } catch (Exception error) {
             // to handle out of memory issue
             Intent d = new Intent(MainHome.this, HBSplash.class);
@@ -147,7 +160,10 @@ public class MainHome extends WeiXinHost<Fragment> {
             }
         });
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
         super.configToolBar(mxToolBarV7);
+
     }
 
     private void renderOriginalTabByPosition(final int position) {
@@ -203,6 +219,7 @@ public class MainHome extends WeiXinHost<Fragment> {
         }
     }
 
+
     private void make_menu_back_button_goto_main() {
         back_button_event = new Runnable() {
             @Override
@@ -232,5 +249,96 @@ public class MainHome extends WeiXinHost<Fragment> {
                 headerPosition(position);
             }
         };
+    }
+
+    private boolean underProcessUrl = false;
+    private LinkedHashMap<String, String> soundcloud_result;
+    private String fb_video_result;
+    private ClipboardManager clipboard;
+
+    private void addMessage(String g) {
+        if (DLUtil.Log.isEmpty()) {
+            DLUtil.Log = g;
+        } else {
+            DLUtil.Log += "\n" + g;
+        }
+    }
+
+    private void setClip(String info) {
+        android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", info);
+        clipboard.setPrimaryClip(clip);
+    }
+
+    @Subscribe
+    public void process_url(ProcessOrder order) {
+        if (underProcessUrl) return;
+        final FBdownNet fbclient = FBdownNet.getInstance(getApplicationContext());
+        final SoundCloud sndClient = SoundCloud.newInstance(getApplicationContext());
+        underProcessUrl = true;
+        if (order.getTypeprocess() == ProcessOrder.progcesstype.SOUNDCLOUD) {
+            sndClient.pullFromUrl(order.getRequest_url(), new SoundCloud.Callback() {
+                @Override
+                public void success(LinkedHashMap<String, String> result) {
+                    addMessage("====success====");
+                    addMessage("resquest has result of " + result.size());
+                    Iterator<String> iel = result.values().iterator();
+                    while (iel.hasNext()) {
+                        String el = iel.next();
+                        addMessage("track =========================");
+                        addMessage(el);
+                    }
+                    // enableall();
+                    fb_video_result = null;
+                    soundcloud_result = result;
+                    Util.EasySoundCloudListShare(getApplication(), result);
+                    underProcessUrl = false;
+                }
+
+                @Override
+                public void failture(String why) {
+                    addMessage("========error=========");
+                    addMessage(why);
+                    //  enableall();
+                    underProcessUrl = false;
+                }
+            });
+
+        } else if (order.getTypeprocess() == ProcessOrder.progcesstype.FB_SHARE_VIDEO) {
+            fbclient.getVideoUrl(
+                    order.getRequest_url(),
+                    new FBdownNet.fbdownCB() {
+                        @Override
+                        public void success(String answer) {
+                            addMessage("====success====");
+                            addMessage(answer);
+                            setClip(answer);
+                            //  enableall();
+                            Util.EasyVideoMessageShare(getApplication(), null, answer);
+                            fb_video_result = answer;
+                            soundcloud_result = null;
+                            underProcessUrl = false;
+                        }
+
+                        @Override
+                        public void failture(String why) {
+                            addMessage("========error=========");
+                            addMessage(why);
+                            //      enableall();
+                            underProcessUrl = false;
+                        }
+
+                        @Override
+                        public void loginfirst(String why) {
+                            addMessage("========need to login first=========");
+                            addMessage(why);
+                            //     enableall();
+                            underProcessUrl = false;
+                        }
+                    }
+            );
+
+        } else {
+            underProcessUrl = false;
+        }
     }
 }
