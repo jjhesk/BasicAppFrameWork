@@ -26,6 +26,10 @@ public class HBSplash extends Splash {
         });
     }
 
+    @Override
+    protected int delayOnScreenToSync() {
+        return 1000;
+    }
 
     @Override
     protected void synchronizeData() {
@@ -51,7 +55,6 @@ public class HBSplash extends Splash {
                 finish();
             }
         });*/
-
 
 
         Intent d = new Intent(HBSplash.this, MainHome.class);
