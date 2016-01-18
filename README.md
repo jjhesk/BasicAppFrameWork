@@ -1,4 +1,4 @@
-# BasicAppFramework
+# BasicAppFramework [ ![Download](https://api.bintray.com/packages/jjhesk/maven/ui/images/download.svg) ](https://bintray.com/jjhesk/maven/ui/_latestVersion)
 
 Jump Start your fancy in 2016
 
