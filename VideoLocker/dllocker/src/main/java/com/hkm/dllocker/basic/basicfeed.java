@@ -126,8 +126,8 @@ public abstract class basicfeed extends Fragment {
     }
 
     private void renderviewlayout(View view) throws Exception {
-        listview_layout = (UltimateRecyclerView) view.findViewById(R.id.recyclerlistview);
-        loadingbar = (ProgressBar) view.findViewById(R.id.ul_loading_progress);
+        listview_layout = (UltimateRecyclerView) view.findViewById(R.id.lylib_list_uv);
+        loadingbar = (ProgressBar) view.findViewById(R.id.lylib_ui_loading_circle);
         listview_layout.setLayoutManager(constructLayoutManager());
         listview_layout.setHasFixedSize(false);
         listview_layout.setSaveEnabled(false);

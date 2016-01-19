@@ -63,17 +63,10 @@ public class BooDialog extends DialogFragment {
                         dialog.dismiss();
                     }
                 })
-
                 .setCancelable(false)
-
-
         ;
         // Create the AlertDialog object and return it
         return builder.create();
     }
 
-    @Override
-    public void setCancelable(boolean cancelable) {
-        super.setCancelable(false);
-    }
 }

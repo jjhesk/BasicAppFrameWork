@@ -10,7 +10,6 @@ import android.widget.ProgressBar;
 import com.hkm.dllocker.R;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.uiUtils.ScrollSmoothLineaerLayoutManager;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by hesk on 19/1/16.
@@ -26,8 +25,8 @@ public abstract class ListBaseLinear extends Fragment {
     }
 
     private void renderviewlayout(View view) throws Exception {
-        listview_layout = (UltimateRecyclerView) view.findViewById(R.id.recyclerlistview);
-        loadingbar = (ProgressBar) view.findViewById(R.id.ul_loading_progress);
+        listview_layout = (UltimateRecyclerView) view.findViewById(R.id.lylib_list_uv);
+        loadingbar = (ProgressBar) view.findViewById(R.id.lylib_ui_loading_circle);
         listview_layout.setLayoutManager(constructLayoutManager());
         listview_layout.setHasFixedSize(false);
         listview_layout.setSaveEnabled(false);
@@ -39,7 +38,12 @@ public abstract class ListBaseLinear extends Fragment {
 
     @LayoutRes
     protected int setEmptyListViewId() {
-        return 0;
+        return R.layout.empty_notfound;
+    }
+
+    @LayoutRes
+    protected int getLayoutListId() {
+        return R.layout.jazz_list;
     }
 
     protected abstract void setUltimateRecyclerViewExtra(final UltimateRecyclerView listview);
@@ -51,5 +55,13 @@ public abstract class ListBaseLinear extends Fragment {
 
     protected void initBinding(View view) throws Exception {
         renderviewlayout(view);
+    }
+
+    protected void enableLoading(boolean b) {
+        if (b) {
+            loadingbar.animate().alpha(1f);
+        } else {
+            loadingbar.animate().alpha(0f);
+        }
     }
 }

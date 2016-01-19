@@ -1,5 +1,6 @@
 package com.hkm.dllocker.module;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -84,7 +85,9 @@ public class ProcessOrder {
     private RecordContainer container;
 
     private void saveCap(UriCap ma) {
-        container.addNewRecord(ma);
+        if (container.addNewRecord(ma)) {
+            callback.done();
+        }
     }
 
     public final void processStart(final Context appContext) {
@@ -93,6 +96,7 @@ public class ProcessOrder {
         if (getTypeprocess() == ProcessOrder.progcesstype.SOUNDCLOUD) {
             final SoundCloud client = SoundCloud.newInstance(appContext);
             client.pullFromUrl(getRequest_url(), new SoundCloud.Callback() {
+                @SuppressLint("ShowToast")
                 @Override
                 public void success(LinkedHashMap<String, String> result) {
                     addMessage("====success====");
@@ -109,21 +113,17 @@ public class ProcessOrder {
                     soundcloud_result = result;
                     Util.EasySoundCloudListShare(appContext, result);
                     underProcessUrl = false;
-
                     Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG);
-
-                    callback.done();
                 }
 
+                @SuppressLint("ShowToast")
                 @Override
                 public void failture(String why) {
                     addMessage("========error=========");
                     addMessage(why);
                     //  enableall();
                     underProcessUrl = false;
-
                     Toast.makeText(appContext, "Failure in conversion\n" + why.toString(), Toast.LENGTH_LONG);
-
                     callback.done();
                 }
             });
@@ -135,6 +135,7 @@ public class ProcessOrder {
             client.getVideoUrl(
                     getRequest_url(),
                     new FBdownNet.fbdownCB() {
+                        @SuppressLint("ShowToast")
                         @Override
                         public void success(String answer) {
                             addMessage("====success====");
@@ -146,12 +147,10 @@ public class ProcessOrder {
                             soundcloud_result = null;
                             underProcessUrl = false;
                             saveCap(RecordContainer.newCap(getRequest_url(), answer, null, UriCap.SOUNDCLOUD));
-
                             Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG);
-                            callback.done();
-
                         }
 
+                        @SuppressLint("ShowToast")
                         @Override
                         public void failture(String why) {
                             addMessage("========error=========");
@@ -163,6 +162,7 @@ public class ProcessOrder {
                             callback.done();
                         }
 
+                        @SuppressLint("ShowToast")
                         @Override
                         public void loginfirst(String why) {
                             addMessage("========need to login first=========");

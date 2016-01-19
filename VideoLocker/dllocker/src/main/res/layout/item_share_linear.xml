@@ -14,16 +14,17 @@
         android:scaleType="centerInside" />
 
     <RelativeLayout
+        android:id="@id/ls_row_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.neopixl.pixlui.components.textview.TextView
             android:id="@id/ls_title_top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="left"
             android:textSize="22sp"
             pixlui:typeface="HelveticaNeueLight.ttf" />
 
@@ -31,9 +32,9 @@
         <com.neopixl.pixlui.components.textview.TextView
             android:id="@id/ls_title_article"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:layout_below="@id/ls_title_top"
-            android:gravity="center"
+            android:gravity="left"
             android:textSize="11sp"
             pixlui:typeface="HelveticaNeueLight.ttf" />
 

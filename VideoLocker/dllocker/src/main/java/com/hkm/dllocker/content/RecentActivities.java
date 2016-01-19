@@ -1,7 +1,6 @@
 package com.hkm.dllocker.content;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
@@ -11,12 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.facebook.ads.Ad;
-import com.facebook.ads.AdError;
-import com.facebook.ads.AdListener;
 import com.hkm.advancedtoolbar.Util.ErrorMessage;
 import com.hkm.dllocker.R;
 import com.hkm.dllocker.ads.ListAd;
@@ -32,8 +27,6 @@ import com.marshalchen.ultimaterecyclerview.quickAdapter.simpleAdmobAdapter;
 import com.neopixl.pixlui.components.textview.TextView;
 
 import java.util.List;
-
-import bolts.Task;
 
 /**
  * Created by hesk on 18/1/16.
@@ -71,39 +64,35 @@ public class RecentActivities extends ListBaseLinear {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rm_container = RecordContainer.getInstnce(getActivity());
-        return inflater.inflate(
-                rm_container.getItemsCount() > 0 ?
-                        R.layout.jazz_list : R.layout.empty_notfound,
-                container, false);
+        return inflater.inflate(getLayoutListId(), container, false);
     }
 
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        if (rm_container.getItemsCount() > 0) {
-            try {
-                initBinding(view);
-            } catch (Exception e) {
-                ErrorMessage.alert(e.getMessage(), getChildFragmentManager());
-            }
-        } else {
-            if (getArguments() != null) {
-                int resId = getArguments().getInt(IMAGE_RES);
-                ImageView gi = (ImageView) view.findViewById(R.id.searchimage);
-                gi.setImageResource(resId);
-                TextView tv = (TextView) view.findViewById(R.id.text);
-                if (!getArguments().getString(SEARCH_QUERY, "").isEmpty()) {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(getArguments().getString(SEARCH_QUERY));
-                    sb.append(" is not found.");
-                    tv.setText(sb.toString());
-                } else {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("There is no recent activities.");
-                    tv.setText(sb.toString());
-                }
-            }
 
+        try {
+            initBinding(view);
+        } catch (Exception e) {
+            ErrorMessage.alert(e.getMessage(), getChildFragmentManager());
+        }
+
+        if (getArguments() != null) {
+            int resId = getArguments().getInt(IMAGE_RES);
+            ImageView gi = (ImageView) view.findViewById(R.id.searchimage);
+            if (gi == null) return;
+            gi.setImageResource(resId);
+            TextView tv = (TextView) view.findViewById(R.id.text);
+            if (!getArguments().getString(SEARCH_QUERY, "").isEmpty()) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(getArguments().getString(SEARCH_QUERY));
+                sb.append(" is not found.");
+                tv.setText(sb.toString());
+            } else {
+                StringBuilder sb = new StringBuilder();
+                sb.append("There is no recent activities.");
+                tv.setText(sb.toString());
+            }
         }
     }
 
@@ -120,6 +109,7 @@ public class RecentActivities extends ListBaseLinear {
                     }
                 });
         listview.setAdapter(adp);
+        enableLoading(false);
     }
 
 
@@ -169,7 +159,7 @@ public class RecentActivities extends ListBaseLinear {
 
         b.tvtitle.setText(u.getMedia_title());
         b.tvtime.setText(DLUtil.getMoment(u.getDate()));
-        if (b.touch_box == null) return;
+        //  if (b.touch_box == null) return;
         b.touch_box.setLongClickable(true);
         b.touch_box.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -191,7 +181,13 @@ public class RecentActivities extends ListBaseLinear {
             big_image_single = (ImageView) itemView.findViewById(R.id.ls_ft_icon);
             tvtitle = (TextView) itemView.findViewById(R.id.ls_title_top);
             tvtime = (TextView) itemView.findViewById(R.id.ls_title_article);
-            touch_box = (RelativeLayout) itemView.findViewById(R.id.click_detection);
+            touch_box = (RelativeLayout) itemView.findViewById(R.id.ls_row_button);
+        }
+    }
+
+    public void notifylist() {
+        if (adp != null) {
+            adp.notifyDataSetChanged();
         }
     }
 

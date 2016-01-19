@@ -10,7 +10,7 @@
         android:layout_height="?attr/actionBarSize" />
 
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
-        android:id="@+id/recyclerlistview"
+        android:id="@id/lylib_list_uv"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/top_view"
@@ -21,8 +21,8 @@
 
 
     <ProgressBar
-        android:id="@+id/ul_loading_progress"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:id="@id/lylib_ui_loading_circle"
+        android:layout_width="@dimen/loading_icon_size"
+        android:layout_height="@dimen/loading_icon_size"
         android:layout_centerInParent="true" />
 </RelativeLayout>

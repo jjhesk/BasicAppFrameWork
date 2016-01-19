@@ -1,9 +1,7 @@
 package com.hkm.dllocker;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.ClipboardManager;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,15 +17,7 @@ import com.hkm.layout.App.WeiXinHost;
 import com.hkm.layout.Dialog.ExitDialog;
 import com.hkm.layout.Menu.TabIconView;
 import com.hkm.layout.WeiXinTabHost;
-import com.hkm.vdlsdk.Util;
-import com.hkm.vdlsdk.client.FBdownNet;
-import com.hkm.vdlsdk.client.SoundCloud;
 import com.squareup.otto.Subscribe;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * Created by hesk on 7/1/16.
@@ -228,18 +218,47 @@ public class MainHome extends WeiXinHost<Fragment> {
         };
     }
 
+    ProgressDialog progress;
 
     @Subscribe
     public void process_url(ProcessOrder order) {
         order.setOnProcessNotification(new ProcessOrder.processNotification() {
             @Override
             public void start() {
+                progress = ProgressDialog.show(
+                        MainHome.this,
+                        "Processing",
+                        "wait for the progress...",
+                        false);
+
+               /* runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (progress != null) {
+                            progress = null;
+                        }
+                        progress = ProgressDialog.show(
+                                getApplicationContext(),
+                                "Processing",
+                                "wait for the progress...",
+                                false);
+                    }
+                });*/
 
             }
 
             @Override
             public void done() {
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress.dismiss();
+                        if (currentFragmentNow instanceof RecentActivities) {
+                            RecentActivities c = (RecentActivities) currentFragmentNow;
+                            c.notifylist();
+                        }
+                    }
+                });
             }
         });
         order.processStart(getApplicationContext());
@@ -270,4 +289,6 @@ public class MainHome extends WeiXinHost<Fragment> {
             e.fillInStackTrace();
         }
     }
+
+
 }
