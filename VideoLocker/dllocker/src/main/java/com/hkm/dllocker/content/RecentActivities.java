@@ -169,9 +169,9 @@ public class RecentActivities extends ListBaseLinear {
 
         b.tvtitle.setText(u.getMedia_title());
         b.tvtime.setText(DLUtil.getMoment(u.getDate()));
-
-        b.click_detection.setLongClickable(true);
-        b.click_detection.setOnLongClickListener(new View.OnLongClickListener() {
+        if (b.touch_box == null) return;
+        b.touch_box.setLongClickable(true);
+        b.touch_box.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 
@@ -184,15 +184,14 @@ public class RecentActivities extends ListBaseLinear {
     public static class binder extends UltimateRecyclerviewViewHolder {
         public final ImageView big_image_single;
         public final TextView tvtitle, tvtime;
-        public final RelativeLayout click_detection;
+        public final RelativeLayout touch_box;
 
         public binder(View itemView) {
             super(itemView);
             big_image_single = (ImageView) itemView.findViewById(R.id.ls_ft_icon);
             tvtitle = (TextView) itemView.findViewById(R.id.ls_title_top);
             tvtime = (TextView) itemView.findViewById(R.id.ls_title_article);
-            //  comment_counts = (TextView) itemView.findViewById(R.id.comment);
-            click_detection = (RelativeLayout) itemView.findViewById(R.id.click_detection);
+            touch_box = (RelativeLayout) itemView.findViewById(R.id.click_detection);
         }
     }
 
