@@ -4,12 +4,15 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.widget.ProgressBar;
 
+import com.hkm.dllocker.module.realm.RecordContainer;
+import com.hkm.dllocker.module.realm.UriCap;
 import com.hkm.vdlsdk.Util;
 import com.hkm.vdlsdk.client.FBdownNet;
 import com.hkm.vdlsdk.client.SoundCloud;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by zJJ on 1/18/2016.
@@ -32,6 +35,7 @@ public class ProcessOrder {
         callback = cb;
         return this;
     }
+
     public enum progcesstype {
         SOUNDCLOUD,
         FB_SHARE_VIDEO
@@ -78,8 +82,14 @@ public class ProcessOrder {
         }
     }
 
+    private RecordContainer container;
+
+    private void saveCap(UriCap ma) {
+        container.addNewRecord(ma);
+    }
 
     public final void processStart(final Context appContext) {
+        container = RecordContainer.getInstnce(appContext);
         if (getTypeprocess() == ProcessOrder.progcesstype.SOUNDCLOUD) {
             final SoundCloud client = SoundCloud.newInstance(appContext);
             client.pullFromUrl(getRequest_url(), new SoundCloud.Callback() {
@@ -87,11 +97,12 @@ public class ProcessOrder {
                 public void success(LinkedHashMap<String, String> result) {
                     addMessage("====success====");
                     addMessage("resquest has result of " + result.size());
-                    Iterator<String> iel = result.values().iterator();
+                    Iterator<Map.Entry<String, String>> iel = result.entrySet().iterator();
                     while (iel.hasNext()) {
-                        String el = iel.next();
+                        Map.Entry<String, String> el = iel.next();
                         addMessage("track =========================");
-                        addMessage(el);
+                        addMessage(el.getValue());
+                        saveCap(RecordContainer.newCap(getRequest_url(), el.getValue(), el.getKey(), UriCap.SOUNDCLOUD));
                     }
                     // enableall();
                     fb_video_result = null;
@@ -126,6 +137,7 @@ public class ProcessOrder {
                             fb_video_result = answer;
                             soundcloud_result = null;
                             underProcessUrl = false;
+                            saveCap(RecordContainer.newCap(getRequest_url(), answer, null, UriCap.SOUNDCLOUD));
                         }
 
                         @Override

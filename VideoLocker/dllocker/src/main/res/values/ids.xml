@@ -6,5 +6,6 @@
     <item name="ls_title_article" type="id" />
     <item name="ls_comments" type="id" />
     <item name="ls_ft_image" type="id" />
+    <item name="ls_ft_icon" type="id" />
     <item name="ls_button_play" type="id" />
 </resources>

@@ -108,7 +108,9 @@ public class MainHome extends WeiXinHost<Fragment> {
     @Override
     public void onStart() {
         super.onStart();
+        EBus.getInstance().register(this);
         clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        if (clipboard.getPrimaryClip() == null) return;
         if (clipboard.getPrimaryClip().getItemCount() > 0) {
             String h = clipboard.getPrimaryClip().getItemAt(0).getHtmlText();
             if (h == null) {
@@ -120,7 +122,6 @@ public class MainHome extends WeiXinHost<Fragment> {
 
             DLUtil.determine_for_url(h, getFragmentManager());
         }
-        EBus.getInstance().register(this);
     }
 
     /**
