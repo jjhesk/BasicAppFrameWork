@@ -38,27 +38,31 @@ public final class DLUtil {
     public static String Log = "";
 
     public static void startFromSharing(@Nullable Intent receivedIntent, FragmentManager mg) {
-        if (receivedIntent == null) return;
-        //find out what we are dealing with
-        String receivedType = receivedIntent.getType();
-        //get the action
-        String receivedAction = receivedIntent.getAction();
+        try {
+            if (receivedIntent == null) return;
+            //find out what we are dealing with
+            String receivedType = receivedIntent.getType();
+            //get the action
+            String receivedAction = receivedIntent.getAction();
 
-        if (receivedType == null || receivedAction == null) return;
-        //make sure it's an action and type we can handle
-        if (receivedAction.equals(Intent.ACTION_SEND)) {
-            //content is being shared
-            if (receivedType.startsWith("text/")) {
-                //handle sent text
-                String receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT);
-                determine_for_url(receivedText, mg);
-            } else if (receivedType.startsWith("image/")) {
-                //handle sent image
+            if (receivedType == null || receivedAction == null) return;
+            //make sure it's an action and type we can handle
+            if (receivedAction.equals(Intent.ACTION_SEND)) {
+                //content is being shared
+                if (receivedType.startsWith("text/")) {
+                    //handle sent text
+                    String receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT);
+                    determine_for_url(receivedText, mg);
+                } else if (receivedType.startsWith("image/")) {
+                    //handle sent image
 
+                }
+
+            } else if (receivedAction.equals(Intent.ACTION_MAIN)) {
+                //app has been launched directly, not from share list
             }
-
-        } else if (receivedAction.equals(Intent.ACTION_MAIN)) {
-            //app has been launched directly, not from share list
+        } catch (Exception e) {
+            e.fillInStackTrace();
         }
     }
 

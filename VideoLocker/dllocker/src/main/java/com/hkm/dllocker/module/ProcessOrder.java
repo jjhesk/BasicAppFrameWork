@@ -1,9 +1,6 @@
 package com.hkm.dllocker.module;
 
-import android.content.ClipboardManager;
 import android.content.Context;
-import android.widget.ProgressBar;
-
 import com.hkm.dllocker.module.realm.RecordContainer;
 import com.hkm.dllocker.module.realm.UriCap;
 import com.hkm.vdlsdk.Util;
@@ -18,7 +15,7 @@ import java.util.Map;
  * Created by zJJ on 1/18/2016.
  */
 public class ProcessOrder {
-    private String request_url;
+    private CharSequence request_url;
     private progcesstype typeprocess;
     private boolean underProcessUrl = false;
     public LinkedHashMap<String, String> soundcloud_result;
@@ -67,7 +64,7 @@ public class ProcessOrder {
     }
 
     public String getRequest_url() {
-        return request_url;
+        return request_url.toString();
     }
 
     public void setRequest_url(String request_url) {

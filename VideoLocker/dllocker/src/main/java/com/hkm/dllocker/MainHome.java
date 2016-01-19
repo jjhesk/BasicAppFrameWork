@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import com.hkm.advancedtoolbar.Util.ErrorMessage;
 import com.hkm.advancedtoolbar.V5.BeastBar;
 import com.hkm.dllocker.content.RecentActivities;
+import com.hkm.dllocker.module.Clipboardmanager;
 import com.hkm.dllocker.module.DLUtil;
 import com.hkm.dllocker.module.EBus;
 import com.hkm.dllocker.module.ProcessOrder;
@@ -36,6 +38,10 @@ public class MainHome extends WeiXinHost<Fragment> {
     public final static int RETURN_WITH_NEW_FEED_URL = 102;
     public final static int RETURN_WITH_NOTHING = 100;
     public final static String KEYURL = "feed_list_url";
+    private BeastBar mBeastWorker;
+    private int tab_position = 0;
+    private boolean tabLock = false, enable_back_button = false;
+    private Runnable back_button_event;
 
     @Override
     public void onBackPressed() {
@@ -93,11 +99,6 @@ public class MainHome extends WeiXinHost<Fragment> {
 
     }
 
-    /*   private RecentActivities rezHome() {
-           // final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-           final RecentActivities mHome = RecentActivities.newInstance(R.drawable.ic_get_pocket);
-           return mHome;
-       }*/
     private RecentActivities rezHome() {
         // final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         final RecentActivities mHome = RecentActivities.newInstance(R.drawable.ic_get_pocket);
@@ -106,54 +107,21 @@ public class MainHome extends WeiXinHost<Fragment> {
 
 
     @Override
-    public void onStart() {
-        super.onStart();
-        EBus.getInstance().register(this);
-        clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        if (clipboard.getPrimaryClip() == null) return;
-        if (clipboard.getPrimaryClip().getItemCount() > 0) {
-            String h = clipboard.getPrimaryClip().getItemAt(0).getHtmlText();
-            if (h == null) {
-                h = clipboard.getPrimaryClip().getItemAt(0).getText().toString();
-            }
-            if (h == null) {
-                h = clipboard.getPrimaryClip().getItemAt(0).getUri().toString();
-            }
-
-            DLUtil.determine_for_url(h, getFragmentManager());
-        }
-    }
-
-    /**
-     * Called when the Fragment is no longer started.  This is generally
-     * tied to {@link Activity#onStop() Activity.onStop} of the containing
-     * Activity's lifecycle.
-     */
-    @Override
-    public void onStop() {
-        super.onStop();
-        EBus.getInstance().unregister(this);
-        //unregisterReceiver();
-    }
-
-    private BeastBar mBeastWorker;
-    private int tab_position = 0;
-    private boolean tabLock = false, enable_back_button = false;
-    private Runnable back_button_event;
-
-    @Override
     protected void afterInitContentViewToolBar() {
         try {
-            //   client = HBEditorialClient.getInstance(this);
-            //   overhead_data = ConfigurationSync.getInstance().getByLanguage(client
-            //   .getLanguagePref());
-            DLUtil.startFromSharing(getIntent(), getFragmentManager());
             setFragment(rezHome(), "home");
+            //   start_clipboard_detection();
+            //   DLUtil.startFromSharing(getIntent(), getFragmentManager());
         } catch (Exception error) {
             // to handle out of memory issue
-            Intent d = new Intent(MainHome.this, HBSplash.class);
-            startActivity(d);
-            finish();
+            ErrorMessage.alert(error.getMessage(), getFragmentManager(), new Runnable() {
+                @Override
+                public void run() {
+                    Intent d = new Intent(MainHome.this, HBSplash.class);
+                    startActivity(d);
+                    finish();
+                }
+            });
         }
     }
 
@@ -172,10 +140,7 @@ public class MainHome extends WeiXinHost<Fragment> {
             }
         });
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-
         super.configToolBar(mxToolBarV7);
-
     }
 
     private void renderOriginalTabByPosition(final int position) {
@@ -205,17 +170,17 @@ public class MainHome extends WeiXinHost<Fragment> {
             //tool_bar_fall_down();
             tab_position = ktab;
     }
-
+/*
     @Override
     protected List<TabIconView.Icon> getCustomTabItems() {
-        //       Iterator<Menuitem> m = overhead_data.nav_bar.iterator();
+          Iterator<Menuitem> m = overhead_data.nav_bar.iterator();
         List<TabIconView.Icon> item = new ArrayList<>();
-    /*    while (m.hasNext()) {
+        while (m.hasNext()) {
             Menuitem menu = m.next();
             item.add(ic_button(menu.getName(), menu.getDisplay()));
-        }*/
+        }
         return item;
-    }
+    }*/
 
     private TabIconView.Icon ic_button(String name, String display) {
         if (name.equalsIgnoreCase("newsfeed")) {
@@ -264,14 +229,6 @@ public class MainHome extends WeiXinHost<Fragment> {
     }
 
 
-    private ClipboardManager clipboard;
-
-
-    private void setClip(String info) {
-        android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", info);
-        clipboard.setPrimaryClip(clip);
-    }
-
     @Subscribe
     public void process_url(ProcessOrder order) {
         order.setOnProcessNotification(new ProcessOrder.processNotification() {
@@ -286,5 +243,30 @@ public class MainHome extends WeiXinHost<Fragment> {
             }
         });
         order.processStart(getApplicationContext());
+    }
+
+    /**
+     * Dispatch onStart() to all fragments.  Ensure any created loaders are
+     * now started.
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EBus.getInstance().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EBus.getInstance().unregister(this);
+    }
+
+    private void start_clipboard_detection() {
+        try {
+            String board_text = Clipboardmanager.readFromClipboard(getApplication());
+            //   DLUtil.determine_for_url(board_text, getFragmentManager());
+        } catch (Exception e) {
+            e.fillInStackTrace();
+        }
     }
 }

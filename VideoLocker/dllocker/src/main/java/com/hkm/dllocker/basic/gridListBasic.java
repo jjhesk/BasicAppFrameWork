@@ -65,8 +65,6 @@ public abstract class gridListBasic<Binder, Data, adapter extends easyAdapter> e
     protected abstract void binddata(final Binder holder, final Data data, int position);
 
 
-    private featureListFragment.admobadp adapter;
-
     protected abstract adapter getAdapter();
 
 

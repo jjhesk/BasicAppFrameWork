@@ -17,5 +17,6 @@
     <string name="autos">Autos</string>
 
     <string name="waitinginput">Type your comment in here.</string>
+    <string name="copy_message">Newly copied message</string>
 
 </resources>

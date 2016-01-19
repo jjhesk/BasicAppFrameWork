@@ -67,7 +67,7 @@ public class RecordContainer {
      */
     public boolean addNewRecord(UriCap copyproduct) {
         Realm realm = Realm.getInstance(conf);
-        if (check_duplicated(realm, copyproduct)) return false;
+       //  if (check_duplicated(realm, copyproduct)) return false;
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(copyproduct);
         realm.commitTransaction();
