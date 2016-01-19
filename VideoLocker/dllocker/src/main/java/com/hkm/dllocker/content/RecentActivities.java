@@ -22,6 +22,7 @@ import com.hkm.dllocker.R;
 import com.hkm.dllocker.ads.ListAd;
 import com.hkm.dllocker.basic.ListBaseLinear;
 import com.hkm.dllocker.module.DLUtil;
+import com.hkm.dllocker.module.EBus;
 import com.hkm.dllocker.module.realm.RecordContainer;
 import com.hkm.dllocker.module.realm.UriCap;
 import com.marshalchen.ultimaterecyclerview.AdmobAdapter;
@@ -183,7 +184,7 @@ public class RecentActivities extends ListBaseLinear {
     public static class binder extends UltimateRecyclerviewViewHolder {
         public final ImageView big_image_single;
         public final TextView tvtitle, tvtime;
-        public final LinearLayout click_detection;
+        public final RelativeLayout click_detection;
 
         public binder(View itemView) {
             super(itemView);
@@ -191,8 +192,20 @@ public class RecentActivities extends ListBaseLinear {
             tvtitle = (TextView) itemView.findViewById(R.id.ls_title_top);
             tvtime = (TextView) itemView.findViewById(R.id.ls_title_article);
             //  comment_counts = (TextView) itemView.findViewById(R.id.comment);
-            click_detection = (LinearLayout) itemView.findViewById(R.id.click_detection);
+            click_detection = (RelativeLayout) itemView.findViewById(R.id.click_detection);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EBus.getInstance().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EBus.getInstance().unregister(this);
     }
 
 }

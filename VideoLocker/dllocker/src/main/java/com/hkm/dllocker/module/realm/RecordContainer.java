@@ -127,11 +127,12 @@ public class RecordContainer {
             return realm.where(UriCap.class).findAll().size();
         } catch (RealmMigrationNeededException e) {
             e.fillInStackTrace();
+            return 0;
         } catch (RealmError e) {
             e.fillInStackTrace();
+            return 0;
         } catch (Exception e) {
             e.fillInStackTrace();
-        } finally {
             return 0;
         }
     }

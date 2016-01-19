@@ -1,6 +1,8 @@
 package com.hkm.dllocker.module;
 
 import android.content.Context;
+import android.widget.Toast;
+
 import com.hkm.dllocker.module.realm.RecordContainer;
 import com.hkm.dllocker.module.realm.UriCap;
 import com.hkm.vdlsdk.Util;
@@ -86,6 +88,7 @@ public class ProcessOrder {
     }
 
     public final void processStart(final Context appContext) {
+        callback.start();
         container = RecordContainer.getInstnce(appContext);
         if (getTypeprocess() == ProcessOrder.progcesstype.SOUNDCLOUD) {
             final SoundCloud client = SoundCloud.newInstance(appContext);
@@ -106,6 +109,10 @@ public class ProcessOrder {
                     soundcloud_result = result;
                     Util.EasySoundCloudListShare(appContext, result);
                     underProcessUrl = false;
+
+                    Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG);
+
+                    callback.done();
                 }
 
                 @Override
@@ -114,6 +121,10 @@ public class ProcessOrder {
                     addMessage(why);
                     //  enableall();
                     underProcessUrl = false;
+
+                    Toast.makeText(appContext, "Failure in conversion\n" + why.toString(), Toast.LENGTH_LONG);
+
+                    callback.done();
                 }
             });
 
@@ -135,6 +146,10 @@ public class ProcessOrder {
                             soundcloud_result = null;
                             underProcessUrl = false;
                             saveCap(RecordContainer.newCap(getRequest_url(), answer, null, UriCap.SOUNDCLOUD));
+
+                            Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG);
+                            callback.done();
+
                         }
 
                         @Override
@@ -143,6 +158,9 @@ public class ProcessOrder {
                             addMessage(why);
                             //      enableall();
                             underProcessUrl = false;
+                            Toast.makeText(appContext, "Failure in conversion\n" + why.toString(), Toast.LENGTH_LONG);
+
+                            callback.done();
                         }
 
                         @Override
@@ -151,6 +169,10 @@ public class ProcessOrder {
                             addMessage(why);
                             //     enableall();
                             underProcessUrl = false;
+                            Toast.makeText(appContext, "Other issues from the facebook logins \n" + why.toString(), Toast.LENGTH_LONG);
+
+                            callback.done();
+
                         }
                     }
             );

@@ -109,9 +109,9 @@ public class MainHome extends WeiXinHost<Fragment> {
     @Override
     protected void afterInitContentViewToolBar() {
         try {
-            setFragment(rezHome(), "home");
-            start_clipboard_detection();
+            //  start_clipboard_detection();
             DLUtil.startFromSharing(getIntent(), getFragmentManager());
+            setFragment(rezHome(), "home");
         } catch (Exception error) {
             // to handle out of memory issue
             ErrorMessage.alert(error.getMessage(), getFragmentManager(), new Runnable() {
@@ -253,6 +253,7 @@ public class MainHome extends WeiXinHost<Fragment> {
     protected void onStart() {
         super.onStart();
         EBus.getInstance().register(this);
+        start_clipboard_detection();
     }
 
     @Override
