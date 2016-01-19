@@ -69,17 +69,13 @@ public class RecentActivities extends ListBaseLinear {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        rm_container = RecordContainer.getInstnce(getActivity());
         return inflater.inflate(
                 rm_container.getItemsCount() > 0 ?
                         R.layout.jazz_list : R.layout.empty_notfound,
                 container, false);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        rm_container = RecordContainer.getInstnce(context);
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

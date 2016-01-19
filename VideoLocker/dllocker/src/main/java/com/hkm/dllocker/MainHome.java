@@ -110,8 +110,8 @@ public class MainHome extends WeiXinHost<Fragment> {
     protected void afterInitContentViewToolBar() {
         try {
             setFragment(rezHome(), "home");
-            //   start_clipboard_detection();
-            //   DLUtil.startFromSharing(getIntent(), getFragmentManager());
+            start_clipboard_detection();
+            DLUtil.startFromSharing(getIntent(), getFragmentManager());
         } catch (Exception error) {
             // to handle out of memory issue
             ErrorMessage.alert(error.getMessage(), getFragmentManager(), new Runnable() {
@@ -264,7 +264,7 @@ public class MainHome extends WeiXinHost<Fragment> {
     private void start_clipboard_detection() {
         try {
             String board_text = Clipboardmanager.readFromClipboard(getApplication());
-            //   DLUtil.determine_for_url(board_text, getFragmentManager());
+            DLUtil.determine_for_url(board_text, getFragmentManager());
         } catch (Exception e) {
             e.fillInStackTrace();
         }

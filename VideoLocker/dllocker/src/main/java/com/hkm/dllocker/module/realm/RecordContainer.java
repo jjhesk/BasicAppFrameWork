@@ -7,12 +7,15 @@ import android.support.annotation.Nullable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.exceptions.RealmError;
+import io.realm.exceptions.RealmMigrationNeededException;
 
 /**
  * Created by hesk on 10/12/15.
@@ -67,7 +70,7 @@ public class RecordContainer {
      */
     public boolean addNewRecord(UriCap copyproduct) {
         Realm realm = Realm.getInstance(conf);
-       //  if (check_duplicated(realm, copyproduct)) return false;
+        //  if (check_duplicated(realm, copyproduct)) return false;
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(copyproduct);
         realm.commitTransaction();
@@ -94,7 +97,16 @@ public class RecordContainer {
     public List<UriCap> getAllRecords() {
         Realm realm = Realm.getInstance(conf);
         RealmResults<UriCap> copies = realm.where(UriCap.class).findAll();
-        return copies;
+        Iterator<UriCap> is = copies.iterator();
+        List<UriCap> list = new ArrayList<>();
+        while (is.hasNext()) {
+            UriCap cap = is.next();
+            list.add(cap);
+        }
+       /* if (copies.size() == 0) {
+            return new RealmResults<UriCap>(copies);
+        }*/
+        return list;
     }
 
     public boolean check_duplicated(Realm realm, UriCap product) {
@@ -110,8 +122,18 @@ public class RecordContainer {
     }
 
     public final int getItemsCount() {
-        Realm realm = Realm.getInstance(conf);
-        return realm.where(UriCap.class).findAll().size();
+        try {
+            Realm realm = Realm.getInstance(conf);
+            return realm.where(UriCap.class).findAll().size();
+        } catch (RealmMigrationNeededException e) {
+            e.fillInStackTrace();
+        } catch (RealmError e) {
+            e.fillInStackTrace();
+        } catch (Exception e) {
+            e.fillInStackTrace();
+        } finally {
+            return 0;
+        }
     }
 
     /**
