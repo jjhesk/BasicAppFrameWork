@@ -1,7 +1,12 @@
 package com.hkm.dllocker.module;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.Nullable;
+
+import com.hkm.advancedtoolbar.Util.ErrorMessage;
+import com.hkm.dllocker.module.Dialog.BooDialog;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,7 +18,8 @@ public final class DLUtil {
 
     public static String Log = "";
 
-    public static void startFromSharing(Intent receivedIntent) {
+    public static void startFromSharing(@Nullable Intent receivedIntent, FragmentManager mg) {
+        if (receivedIntent == null) return;
         //find out what we are dealing with
         String receivedType = receivedIntent.getType();
         //get the action
@@ -26,22 +32,7 @@ public final class DLUtil {
             if (receivedType.startsWith("text/")) {
                 //handle sent text
                 String receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT);
-                String container = "";
-                determine_for_url(receivedText, container);
-                if (!container.isEmpty()) {
-                    Uri hparse = Uri.parse(container);
-                    if (hparse.getAuthority().equalsIgnoreCase("soundcloud.com")) {
-                        ProcessOrder po = new ProcessOrder(ProcessOrder.progcesstype.SOUNDCLOUD);
-                        po.setRequest_url(container.trim());
-                        EBus.getInstance().post(po);
-                    } else if (hparse.getAuthority().equalsIgnoreCase("m.facebook.com")) {
-                        ProcessOrder po = new ProcessOrder(ProcessOrder.progcesstype.FB_SHARE_VIDEO);
-                        po.setRequest_url(container.trim());
-                        EBus.getInstance().post(po);
-                    }
-                } else {
-
-                }
+                determine_for_url(receivedText, mg);
             } else if (receivedType.startsWith("image/")) {
                 //handle sent image
 
@@ -52,8 +43,8 @@ public final class DLUtil {
         }
     }
 
-    private static void determine_for_url(String receivedText, String container) {
-        //final String find_login = "https://soundcloud.com/";
+    public static void determine_for_url(@Nullable String receivedText, FragmentManager mg) {
+        if (receivedText == null || receivedText.isEmpty()) return;
         final String get_link = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
         Pattern patternc = Pattern.compile(get_link);
         Matcher fm = patternc.matcher(receivedText);
@@ -61,7 +52,42 @@ public final class DLUtil {
             // Log.d("hackResult", fm.group(0));
             String k_start = fm.group(0);
             if (!k_start.isEmpty()) {
-                container = k_start;
+
+                Uri base = Uri.parse(k_start);
+                if (base.getAuthority().equalsIgnoreCase("soundcloud.com")) {
+
+                    if (base.getPathSegments().contains("you")) return;
+                    if (base.getPathSegments().contains("pages")) return;
+                    if (base.getPathSegments().contains("settings")) return;
+                    if (base.getLastPathSegment().equalsIgnoreCase("stream")) return;
+                    if (base.getLastPathSegment().equalsIgnoreCase("upload")) return;
+                    if (base.getLastPathSegment().equalsIgnoreCase("people")) return;
+                    if (base.getLastPathSegment().equalsIgnoreCase("settings")) return;
+
+                    final ProcessOrder po = new ProcessOrder(ProcessOrder.progcesstype.SOUNDCLOUD);
+                    po.setRequest_url(k_start.trim());
+
+                    BooDialog.enquire("Soundcloud music is found, do you want to convert it now? ", mg, new Runnable() {
+                        @Override
+                        public void run() {
+                            EBus.getInstance().post(po);
+                        }
+                    });
+
+                } else if (base.getAuthority().equalsIgnoreCase("m.facebook.com")) {
+
+
+                    final ProcessOrder po = new ProcessOrder(ProcessOrder.progcesstype.FB_SHARE_VIDEO);
+                    po.setRequest_url(k_start.trim());
+                    BooDialog.enquire("Facebook video is found, do you want to convert it now? ", mg, new Runnable() {
+                        @Override
+                        public void run() {
+                            EBus.getInstance().post(po);
+                        }
+                    });
+                }
+
+
             } else {
             }
 

@@ -109,6 +109,17 @@ public class MainHome extends WeiXinHost<Fragment> {
     public void onStart() {
         super.onStart();
         clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        if (clipboard.getPrimaryClip().getItemCount() > 0) {
+            String h = clipboard.getPrimaryClip().getItemAt(0).getHtmlText();
+            if (h == null) {
+                h = clipboard.getPrimaryClip().getItemAt(0).getText().toString();
+            }
+            if (h == null) {
+                h = clipboard.getPrimaryClip().getItemAt(0).getUri().toString();
+            }
+
+            DLUtil.determine_for_url(h, getFragmentManager());
+        }
         EBus.getInstance().register(this);
     }
 
@@ -135,8 +146,8 @@ public class MainHome extends WeiXinHost<Fragment> {
             //   client = HBEditorialClient.getInstance(this);
             //   overhead_data = ConfigurationSync.getInstance().getByLanguage(client
             //   .getLanguagePref());
+            DLUtil.startFromSharing(getIntent(), getFragmentManager());
             setFragment(rezHome(), "home");
-            DLUtil.startFromSharing(getIntent());
         } catch (Exception error) {
             // to handle out of memory issue
             Intent d = new Intent(MainHome.this, HBSplash.class);
@@ -251,18 +262,9 @@ public class MainHome extends WeiXinHost<Fragment> {
         };
     }
 
-    private boolean underProcessUrl = false;
-    private LinkedHashMap<String, String> soundcloud_result;
-    private String fb_video_result;
+
     private ClipboardManager clipboard;
 
-    private void addMessage(String g) {
-        if (DLUtil.Log.isEmpty()) {
-            DLUtil.Log = g;
-        } else {
-            DLUtil.Log += "\n" + g;
-        }
-    }
 
     private void setClip(String info) {
         android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", info);
@@ -271,74 +273,17 @@ public class MainHome extends WeiXinHost<Fragment> {
 
     @Subscribe
     public void process_url(ProcessOrder order) {
-        if (underProcessUrl) return;
-        final FBdownNet fbclient = FBdownNet.getInstance(getApplicationContext());
-        final SoundCloud sndClient = SoundCloud.newInstance(getApplicationContext());
-        underProcessUrl = true;
-        if (order.getTypeprocess() == ProcessOrder.progcesstype.SOUNDCLOUD) {
-            sndClient.pullFromUrl(order.getRequest_url(), new SoundCloud.Callback() {
-                @Override
-                public void success(LinkedHashMap<String, String> result) {
-                    addMessage("====success====");
-                    addMessage("resquest has result of " + result.size());
-                    Iterator<String> iel = result.values().iterator();
-                    while (iel.hasNext()) {
-                        String el = iel.next();
-                        addMessage("track =========================");
-                        addMessage(el);
-                    }
-                    // enableall();
-                    fb_video_result = null;
-                    soundcloud_result = result;
-                    Util.EasySoundCloudListShare(getApplication(), result);
-                    underProcessUrl = false;
-                }
+        order.setOnProcessNotification(new ProcessOrder.processNotification() {
+            @Override
+            public void start() {
 
-                @Override
-                public void failture(String why) {
-                    addMessage("========error=========");
-                    addMessage(why);
-                    //  enableall();
-                    underProcessUrl = false;
-                }
-            });
+            }
 
-        } else if (order.getTypeprocess() == ProcessOrder.progcesstype.FB_SHARE_VIDEO) {
-            fbclient.getVideoUrl(
-                    order.getRequest_url(),
-                    new FBdownNet.fbdownCB() {
-                        @Override
-                        public void success(String answer) {
-                            addMessage("====success====");
-                            addMessage(answer);
-                            setClip(answer);
-                            //  enableall();
-                            Util.EasyVideoMessageShare(getApplication(), null, answer);
-                            fb_video_result = answer;
-                            soundcloud_result = null;
-                            underProcessUrl = false;
-                        }
+            @Override
+            public void done() {
 
-                        @Override
-                        public void failture(String why) {
-                            addMessage("========error=========");
-                            addMessage(why);
-                            //      enableall();
-                            underProcessUrl = false;
-                        }
-
-                        @Override
-                        public void loginfirst(String why) {
-                            addMessage("========need to login first=========");
-                            addMessage(why);
-                            //     enableall();
-                            underProcessUrl = false;
-                        }
-                    }
-            );
-
-        } else {
-            underProcessUrl = false;
-        }
+            }
+        });
+        order.processStart(getApplicationContext());
     }
 }
