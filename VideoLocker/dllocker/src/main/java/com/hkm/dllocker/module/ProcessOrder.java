@@ -84,11 +84,6 @@ public class ProcessOrder {
 
     private RecordContainer container;
 
-    private void saveCap(UriCap ma) {
-        if (container.addNewRecord(ma)) {
-            callback.done();
-        }
-    }
 
     public final void processStart(final Context appContext) {
         callback.start();
@@ -100,20 +95,32 @@ public class ProcessOrder {
                 @Override
                 public void success(LinkedHashMap<String, String> result) {
                     addMessage("====success====");
-                    addMessage("resquest has result of " + result.size());
+                    addMessage("request has result of " + result.size());
                     Iterator<Map.Entry<String, String>> iel = result.entrySet().iterator();
                     while (iel.hasNext()) {
                         Map.Entry<String, String> el = iel.next();
                         addMessage("track =========================");
                         addMessage(el.getValue());
-                        saveCap(RecordContainer.newCap(getRequest_url(), el.getValue(), el.getKey(), UriCap.SOUNDCLOUD));
+
+                        if ((container.addNewRecord(
+                                getRequest_url(),
+                                el.getValue(),
+                                el.getKey(),
+                                UriCap.SOUNDCLOUD)
+                        )) {
+
+                        }
+
                     }
-                    // enableall();
+
                     fb_video_result = null;
                     soundcloud_result = result;
                     Util.EasySoundCloudListShare(appContext, result);
                     underProcessUrl = false;
                     Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG);
+
+                    callback.done();
+
                 }
 
                 @SuppressLint("ShowToast")
@@ -129,9 +136,7 @@ public class ProcessOrder {
             });
 
         } else if (getTypeprocess() == ProcessOrder.progcesstype.FB_SHARE_VIDEO) {
-
             final FBdownNet client = FBdownNet.getInstance(appContext);
-
             client.getVideoUrl(
                     getRequest_url(),
                     new FBdownNet.fbdownCB() {
@@ -142,12 +147,21 @@ public class ProcessOrder {
                             addMessage(answer);
                             //  setClip(answer);
                             //  enableall();
-                            Util.EasyVideoMessageShare(appContext, null, answer);
+                            // Util.EasyVideoMessageShare(appContext, null, answer);
                             fb_video_result = answer;
                             soundcloud_result = null;
                             underProcessUrl = false;
-                            saveCap(RecordContainer.newCap(getRequest_url(), answer, null, UriCap.SOUNDCLOUD));
-                            Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG);
+
+                            if ((container.addNewRecord(
+                                    getRequest_url(),
+                                    answer,
+                                    "N/A",
+                                    UriCap.FACEBOOK_VIDEO)
+                            )) {
+                                Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG);
+                            }
+
+                            callback.done();
                         }
 
                         @SuppressLint("ShowToast")

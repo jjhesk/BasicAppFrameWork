@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 
+import com.hkm.layout.Module.easyAdapter;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +16,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import io.realm.exceptions.RealmError;
 import io.realm.exceptions.RealmMigrationNeededException;
 
@@ -62,17 +65,12 @@ public class RecordContainer {
         return worker_status;
     }
 
-    /**
-     * locally add to the storeschema list
-     *
-     * @param copyproduct the client interface
-     * @return bool result of the wishlist being added.
-     */
-    public boolean addNewRecord(UriCap copyproduct) {
+
+    public boolean addNewRecord(String raw, String product, @Nullable String media_title, int mediaType) {
         Realm realm = Realm.getInstance(conf);
-        //  if (check_duplicated(realm, copyproduct)) return false;
+        if (check_duplicated(realm, media_title)) return false;
         realm.beginTransaction();
-        realm.copyToRealmOrUpdate(copyproduct);
+        newCap(realm.createObject(UriCap.class), raw, product, media_title, mediaType);
         realm.commitTransaction();
         return true;
     }
@@ -93,10 +91,20 @@ public class RecordContainer {
         realm.commitTransaction();
     }
 
+    public void addToAdapter(easyAdapter adapter) {
+        Realm realm = Realm.getInstance(conf);
+        RealmResults<UriCap> copies = realm.where(UriCap.class).findAll();
+        Iterator<UriCap> is = copies.iterator();
+        while (is.hasNext()) {
+            UriCap cap = is.next();
+            adapter.insert(cap);
+        }
+    }
 
     public List<UriCap> getAllRecords() {
         Realm realm = Realm.getInstance(conf);
         RealmResults<UriCap> copies = realm.where(UriCap.class).findAll();
+        copies.sort("date", Sort.DESCENDING);
         Iterator<UriCap> is = copies.iterator();
         List<UriCap> list = new ArrayList<>();
         while (is.hasNext()) {
@@ -109,13 +117,12 @@ public class RecordContainer {
         return list;
     }
 
-    public boolean check_duplicated(Realm realm, UriCap product) {
+
+    public boolean check_duplicated(Realm realm, String raw_string) {
         RealmQuery<UriCap> query = realm.where(UriCap.class);
-        query.equalTo("id", product.getId());
-        // Execute the query:
-        RealmResults<UriCap> result = query.findAll();
-        return result.size() > 0;
+        return query.equalTo("media_title", raw_string).findFirst() != null;
     }
+
 
     private void errorTrigger() {
         if (message_channel != null) message_channel.failure(error_message);
@@ -147,20 +154,26 @@ public class RecordContainer {
     }
 
 
-    public static UriCap newCap(String raw, String product, @Nullable String media_title, int mediaType) {
-        UriCap cap = new UriCap();
-        cap.setCompatible_link(product);
-        cap.setRaw_link(raw);
-        cap.setMedia_type(mediaType);
+    private static UriCap newCap(
+            UriCap begintransaction,
+            String raw,
+            String product,
+            @Nullable String media_title,
+            int mediaType) {
+        //UriCap begintransaction = new UriCap();
+        begintransaction.setCompatible_link(product);
+        begintransaction.setRaw_link(raw);
+        begintransaction.setMedia_type(mediaType);
         Date date = new Date();
         Timestamp now = new Timestamp(date.getTime());
-        cap.setDate(now.toString());
+        begintransaction.setDate(now.toString());
 
         if (media_title == null) {
-            cap.setMedia_title("N/A");
+            begintransaction.setMedia_title("N/A");
         } else {
-            cap.setMedia_title(media_title);
+            begintransaction.setMedia_title(media_title);
         }
-        return cap;
+
+        return begintransaction;
     }
 }

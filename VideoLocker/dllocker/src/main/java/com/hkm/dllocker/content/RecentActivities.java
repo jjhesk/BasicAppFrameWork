@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +15,15 @@ import android.widget.RelativeLayout;
 
 import com.hkm.advancedtoolbar.Util.ErrorMessage;
 import com.hkm.dllocker.R;
-import com.hkm.dllocker.ads.ListAd;
 import com.hkm.dllocker.basic.ListBaseLinear;
 import com.hkm.dllocker.module.DLUtil;
 import com.hkm.dllocker.module.EBus;
 import com.hkm.dllocker.module.realm.RecordContainer;
 import com.hkm.dllocker.module.realm.UriCap;
-import com.marshalchen.ultimaterecyclerview.AdmobAdapter;
+import com.hkm.layout.Module.easyAdapter;
+import com.hkm.vdlsdk.Util;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
-import com.marshalchen.ultimaterecyclerview.quickAdapter.simpleAdmobAdapter;
 import com.neopixl.pixlui.components.textview.TextView;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class RecentActivities extends ListBaseLinear {
     private final static String SEARCH_QUERY = "query";
     private boolean hasrecentactivities;
     private RecordContainer rm_container;
-    private admobadp adp;
+    private datadaptr adp;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static RecentActivities newInstance(@DrawableRes int empty_item_image) {
@@ -98,49 +98,42 @@ public class RecentActivities extends ListBaseLinear {
 
     @Override
     protected void setUltimateRecyclerViewExtra(UltimateRecyclerView listview) {
-        adp = new admobadp(
-                ListAd.newAdView(getActivity()),
-                false, 10,
-                rm_container.getAllRecords(),
-                new AdmobAdapter.AdviewListener() {
-                    @Override
-                    public ViewGroup onGenerateAdview() {
-                        return ListAd.newAdView(getActivity());
-                    }
-                });
+        adp = new datadaptr(rm_container.getAllRecords());
         listview.setAdapter(adp);
         enableLoading(false);
     }
 
+    private class datadaptr extends easyAdapter<UriCap, binder> {
 
-    public class admobadp extends simpleAdmobAdapter<UriCap, binder, RelativeLayout> {
 
-        public admobadp(RelativeLayout adview, boolean insertOnce, int setInterval, List<UriCap> L, AdviewListener listener) {
-            super(adview, insertOnce, setInterval, L, listener);
+        /**
+         * dynamic object to start
+         *
+         * @param list the list source
+         */
+        public datadaptr(List<UriCap> list) {
+            super(list);
         }
 
         @Override
-        protected void withBindHolder(binder var1, UriCap var2, int var3) {
-            binddata(var1, var2, var3);
+        protected binder newViewHolder(View view) {
+            return new binder(view);
         }
-
 
         @Override
         protected int getNormalLayoutResId() {
             return normalLayoutResId();
         }
 
-        /**
-         * create a new view holder for data binding
-         *
-         * @param mview the view layout with resource initialized
-         * @return the view type
-         */
         @Override
-        protected binder newViewHolder(View mview) {
-            return new binder(mview);
+        protected void withBindHolder(binder holder, UriCap data, int position) {
+            binddata(holder, data, position);
         }
 
+        @Override
+        public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        }
     }
 
     @LayoutRes
@@ -148,7 +141,7 @@ public class RecentActivities extends ListBaseLinear {
         return R.layout.item_share_linear;
     }
 
-    private void binddata(binder b, UriCap u, int t) {
+    private void binddata(binder b, final UriCap u, int t) {
         if (u.getMedia_type() == UriCap.SOUNDCLOUD) {
             b.big_image_single.setImageResource(R.drawable.ic_snd_cloud);
         }
@@ -160,13 +153,20 @@ public class RecentActivities extends ListBaseLinear {
         b.tvtitle.setText(u.getMedia_title());
         b.tvtime.setText(DLUtil.getMoment(u.getDate()));
         //  if (b.touch_box == null) return;
-        b.touch_box.setLongClickable(true);
-        b.touch_box.setOnLongClickListener(new View.OnLongClickListener() {
+      /*  b.touch_box.setLongClickable(true);
+          b.touch_box.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
-
                 return false;
+            }
+        });*/
+
+        b.touch_box.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Util.EasyVideoMessageShare(getActivity(), "I just come acrossed from this download link @ ",
+                        u.getCompatible_link());
             }
         });
     }
@@ -186,9 +186,8 @@ public class RecentActivities extends ListBaseLinear {
     }
 
     public void notifylist() {
-        if (adp != null) {
-            adp.notifyDataSetChanged();
-        }
+        adp = new datadaptr(rm_container.getAllRecords());
+        listview_layout.setAdapter(adp);
     }
 
     @Override

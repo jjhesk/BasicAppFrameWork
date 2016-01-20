@@ -99,8 +99,8 @@ public class MainHome extends WeiXinHost<Fragment> {
     @Override
     protected void afterInitContentViewToolBar() {
         try {
-            //  start_clipboard_detection();
-            DLUtil.startFromSharing(getIntent(), getFragmentManager());
+            boolean fromIntent = DLUtil.startFromSharing(getIntent(), getFragmentManager());
+            if (!fromIntent) start_clipboard_detection();
             setFragment(rezHome(), "home");
         } catch (Exception error) {
             // to handle out of memory issue
@@ -116,17 +116,29 @@ public class MainHome extends WeiXinHost<Fragment> {
     }
 
     @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
     protected void configToolBar(Toolbar mxToolBarV7) {
         BeastBar.Builder bb = new BeastBar.Builder();
         bb.search(R.mipmap.ic_action_find);
         bb.companyIcon(R.drawable.actionbar_bg_hb_logo);
         bb.back(R.drawable.ic_back_adjusted);
         bb.background(R.drawable.actionbar_bg_hb_white);
+        bb.back(R.drawable.ptr_rotate_arrow);
         mBeastWorker = BeastBar.withToolbar(this, mxToolBarV7, bb);
         mBeastWorker.setFindIconFunc(new Runnable() {
             @Override
             public void run() {
                 searchView.showSearch();
+            }
+        });
+        mBeastWorker.setBackIconFunc(new Runnable() {
+            @Override
+            public void run() {
+                start_clipboard_detection();
             }
         });
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -272,7 +284,6 @@ public class MainHome extends WeiXinHost<Fragment> {
     protected void onStart() {
         super.onStart();
         EBus.getInstance().register(this);
-        start_clipboard_detection();
     }
 
     @Override

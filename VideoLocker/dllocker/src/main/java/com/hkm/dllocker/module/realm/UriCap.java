@@ -11,9 +11,7 @@ import io.realm.annotations.Required;
 public class UriCap extends RealmObject {
 
     public final static int SOUNDCLOUD = 1, FACEBOOK_VIDEO = 2;
-    @Index
-    @PrimaryKey
-    private long id;
+
     private String media_title;
     @Required
     private String compatible_link;
@@ -38,14 +36,6 @@ public class UriCap extends RealmObject {
 
     public void setRaw_link(String raw_link) {
         this.raw_link = raw_link;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getMedia_title() {

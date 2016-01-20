@@ -1,7 +1,6 @@
 package com.hkm.dllocker.module;
 
 import android.app.Activity;
-import android.app.Application;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -13,14 +12,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
-import com.hkm.advancedtoolbar.Util.ErrorMessage;
 import com.hkm.dllocker.module.Dialog.BooDialog;
 
 import java.text.ParseException;
@@ -37,15 +34,15 @@ public final class DLUtil {
 
     public static String Log = "";
 
-    public static void startFromSharing(@Nullable Intent receivedIntent, FragmentManager mg) {
+    public static boolean startFromSharing(@Nullable Intent receivedIntent, FragmentManager mg) {
         try {
-            if (receivedIntent == null) return;
+            if (receivedIntent == null) return false;
             //find out what we are dealing with
             String receivedType = receivedIntent.getType();
             //get the action
             String receivedAction = receivedIntent.getAction();
 
-            if (receivedType == null || receivedAction == null) return;
+            if (receivedType == null || receivedAction == null) return false;
             //make sure it's an action and type we can handle
             if (receivedAction.equals(Intent.ACTION_SEND)) {
                 //content is being shared
@@ -53,6 +50,8 @@ public final class DLUtil {
                     //handle sent text
                     String receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT);
                     determine_for_url(receivedText, mg);
+
+                    return true;
                 } else if (receivedType.startsWith("image/")) {
                     //handle sent image
 
@@ -63,7 +62,9 @@ public final class DLUtil {
             }
         } catch (Exception e) {
             e.fillInStackTrace();
+            return false;
         }
+        return false;
     }
 
     public static void determine_for_url(@Nullable String receivedText, FragmentManager mg) {
@@ -128,15 +129,16 @@ public final class DLUtil {
         String ISO_FORMAT5 = "yyyy-MM-dd'T'HH:mm:ssZ";
 
         try {
-            Date parsedTimeStamp = new SimpleDateFormat(ISO_FORMAT5, new Locale("en", "US")).parse(get_date);
-
+            Date parsedTimeStamp = new SimpleDateFormat(ISO_FORMAT2, new Locale("en", "US")).parse(get_date);
+            org.ocpsoft.prettytime.PrettyTime p = new org.ocpsoft.prettytime.PrettyTime();
+            return p.format(parsedTimeStamp);
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
         //     return p.format(parsedTimeStamp);
-
         return get_date;
+        //   return get_date;
     }
 
 
