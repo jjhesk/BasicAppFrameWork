@@ -161,7 +161,7 @@ public class RecentActivities extends ListBaseLinear {
         return R.layout.item_share_linear;
     }
 
-    private void binddata(binder b, final UriCap u, int t) {
+    private void binddata(binder b, final UriCap u, final int t) {
         if (u.getMedia_type() == UriCap.SOUNDCLOUD) {
             b.big_image_single.setImageResource(R.drawable.ic_snd_cloud);
         }
@@ -184,7 +184,7 @@ public class RecentActivities extends ListBaseLinear {
         b.touch_box.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EBus.newItemMenu(u);
+                EBus.callMenu(u);
             }
         });
     }

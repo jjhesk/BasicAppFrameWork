@@ -109,7 +109,7 @@ public class BottomSheetDialogFragment extends DialogFragment {
         }
     }
 
-    protected void showloading() {
+    public void showloading() {
         proloadingbar.setVisibility(View.VISIBLE);
         proloadingbar.setAlpha(0f);
         proloadingbar.animate().alpha(1f);

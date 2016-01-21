@@ -1,5 +1,6 @@
 package com.hkm.dllocker.module;
 
+import com.hkm.dllocker.module.events.SimpleMenu;
 import com.hkm.dllocker.module.events.menuCall;
 import com.hkm.dllocker.module.realm.UriCap;
 import com.squareup.otto.Bus;
@@ -29,6 +30,11 @@ public class EBus {
     public static void newItemMenu(UriCap cc, int menuOption) {
         menuCall c = new menuCall(cc);
         c.setAction(menuOption);
+        getInstance().post(c);
+    }
+
+    public static void callMenu(UriCap cc) {
+        SimpleMenu c = new SimpleMenu(cc);
         getInstance().post(c);
     }
 

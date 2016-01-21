@@ -1,24 +1,28 @@
 package com.hkm.dllocker;
 
-import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hkm.advancedtoolbar.Util.ErrorMessage;
 import com.hkm.advancedtoolbar.V5.BeastBar;
 import com.hkm.dllocker.content.RecentActivities;
-import com.hkm.dllocker.module.ActionMenu;
 import com.hkm.dllocker.module.Clipboardmanager;
 import com.hkm.dllocker.module.DLUtil;
 import com.hkm.dllocker.module.EBus;
 import com.hkm.dllocker.module.ProcessOrder;
 import com.hkm.dllocker.module.UI;
+import com.hkm.dllocker.module.events.SimpleMenu;
 import com.hkm.dllocker.module.events.menuCall;
+import com.hkm.dllocker.module.realm.UriCap;
 import com.hkm.layout.App.WeiXinHost;
 import com.hkm.layout.Dialog.ExitDialog;
 import com.hkm.layout.Menu.TabIconView;
@@ -41,7 +45,7 @@ public class MainHome extends WeiXinHost<Fragment> {
     private int tab_position = 0;
     private boolean tabLock = false, enable_back_button = false;
     private Runnable back_button_event;
-    private ActionMenu am;
+
 
     @Override
     public void onBackPressed() {
@@ -151,8 +155,7 @@ public class MainHome extends WeiXinHost<Fragment> {
             }
         });
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        am = new ActionMenu(this);
-        am.attachBottomSheet();
+
         super.configToolBar(mxToolBarV7);
     }
 
@@ -282,13 +285,10 @@ public class MainHome extends WeiXinHost<Fragment> {
         order.processStart(getApplicationContext());
     }
 
-    /**
-     * Dispatch onStart() to all fragments.  Ensure any created loaders are
-     * now started.
-     */
     @Override
     protected void onStart() {
         super.onStart();
+
         EBus.getInstance().register(this);
     }
 
@@ -296,6 +296,7 @@ public class MainHome extends WeiXinHost<Fragment> {
     protected void onStop() {
         super.onStop();
         EBus.getInstance().unregister(this);
+
     }
 
     private void start_clipboard_detection() {
@@ -321,5 +322,68 @@ public class MainHome extends WeiXinHost<Fragment> {
             Clipboardmanager.copyToClipboard(this, call.getCap().getCompatible_link());
             Toast.makeText(this, "link is copied", Toast.LENGTH_LONG).show();
         }
+    }
+
+
+    @Subscribe
+    public void itemTriggered(SimpleMenu sim) {
+        openBottomSheet(sim.getCap());
+    }
+
+    public void openBottomSheet(final UriCap temp_stored) {
+        View view = getLayoutInflater().inflate(R.layout.tabs_options, null);
+        final TextView c_share = (TextView) view.findViewById(R.id.c_share);
+        final TextView c_copy = (TextView) view.findViewById(R.id.c_copy);
+        final TextView c_validate = (TextView) view.findViewById(R.id.c_validate);
+        // final TextView txtUninstall = (TextView) view.findViewById(R.id.txt_uninstall);
+
+        final Dialog mBottomSheetDialog = new Dialog(MainHome.this, R.style.MaterialDialogSheet);
+        mBottomSheetDialog.setContentView(view);
+        mBottomSheetDialog.setCancelable(true);
+        mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+        mBottomSheetDialog.show();
+
+        c_share.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                EBus.newItemMenu((UriCap) temp_stored, menuCall.SHARE);
+                Toast.makeText(MainHome.this, "Clicked Backup", Toast.LENGTH_SHORT).show();
+                mBottomSheetDialog.dismiss();
+            }
+        });
+
+        c_copy.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                EBus.newItemMenu((UriCap) temp_stored, menuCall.SHARE);
+                Toast.makeText(MainHome.this, "Clicked Detail", Toast.LENGTH_SHORT).show();
+                mBottomSheetDialog.dismiss();
+            }
+        });
+
+        c_validate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                EBus.newItemMenu((UriCap) temp_stored, menuCall.SHARE);
+                Toast.makeText(MainHome.this, "Clicked Open", Toast.LENGTH_SHORT).show();
+                mBottomSheetDialog.dismiss();
+            }
+        });
+
+     /*   txtUninstall.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                EBus.newItemMenu((UriCap) temp_stored, menuCall.SHARE);
+                Toast.makeText(MainHome.this, "Clicked Uninstall", Toast.LENGTH_SHORT).show();
+                mBottomSheetDialog.dismiss();
+
+            }
+        });*/
+
     }
 }

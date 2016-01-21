@@ -1,51 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/lylib_menu_container"
+    android:id="@+id/popup_window"
     android:layout_width="match_parent"
-
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <com.hkm.slider.Layouts.MaterialRippleLayout
-        android:id="@+id/b1"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:clickable="true"
-        android:paddingLeft="20dp">
+        android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/c_share"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_fix_issue"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/second_pref_v2"
             android:gravity="center_vertical"
-            android:text="Share" />
+            android:padding="15dp"
+            android:text="Share Link"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </com.hkm.slider.Layouts.MaterialRippleLayout>
 
     <com.hkm.slider.Layouts.MaterialRippleLayout
-        android:id="@+id/b2"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:clickable="true"
-        android:paddingLeft="20dp">
+        android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/c_copy"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_openinbox"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/second_pref_v2"
             android:gravity="center_vertical"
-            android:text="Validate Source" />
-
+            android:padding="15dp"
+            android:text="Copy Link"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </com.hkm.slider.Layouts.MaterialRippleLayout>
 
     <com.hkm.slider.Layouts.MaterialRippleLayout
-        android:id="@+id/b3"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:clickable="true"
-        android:paddingLeft="20dp">
+        android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/c_validate"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_disc_cc"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/second_pref_v2"
             android:gravity="center_vertical"
-            android:text="Copy" />
+            android:padding="15dp"
+            android:text="Fix Issue"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </com.hkm.slider.Layouts.MaterialRippleLayout>
+
+    <com.hkm.slider.Layouts.MaterialRippleLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_uninstall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_boxup"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/second_pref_v2"
+            android:gravity="center_vertical"
+            android:padding="15dp"
+            android:text="Uninstall"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </com.hkm.slider.Layouts.MaterialRippleLayout>
 </LinearLayout>

@@ -68,6 +68,7 @@ public final class DLUtil {
     }
 
     public static void determine_for_url(@Nullable String receivedText, FragmentManager mg) {
+        //DLUtil.slide_uri_check();
         if (receivedText == null || receivedText.isEmpty()) return;
         final String get_link = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
         Pattern patternc = Pattern.compile(get_link);
@@ -110,11 +111,7 @@ public final class DLUtil {
                         }
                     });
                 }
-
-
-            } else {
             }
-
         }
     }
 
@@ -127,9 +124,10 @@ public final class DLUtil {
         String ISO_FORMAT3 = "yyyy-MM-dd HH:mm:ss z";
         String ISO_FORMAT4 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         String ISO_FORMAT5 = "yyyy-MM-dd'T'HH:mm:ssZ";
+        String ISO_FORMAT6 = "yyyy-MM-dd HH:mm:ss.SSS";
 
         try {
-            Date parsedTimeStamp = new SimpleDateFormat(ISO_FORMAT2, new Locale("en", "US")).parse(get_date);
+            Date parsedTimeStamp = new SimpleDateFormat(ISO_FORMAT6, new Locale("en", "US")).parse(get_date);
             org.ocpsoft.prettytime.PrettyTime p = new org.ocpsoft.prettytime.PrettyTime();
             return p.format(parsedTimeStamp);
 
