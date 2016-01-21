@@ -13,8 +13,8 @@ android {
         applicationId "com.hkm.dllocker"
         minSdkVersion 17
         targetSdkVersion targetSdk
-        versionCode 12
-        versionName '0.1.2'
+        versionCode publish_build_number
+        versionName publich_version_name
         multiDexEnabled = false
     }
     buildTypes {
@@ -34,7 +34,7 @@ android {
     }
     productFlavors {
         publishing_package {
-            applicationId "com.hkm.dllocker"
+            applicationId "com.hkm.dltstchlien"
             versionName defaultConfig.versionName
             signingConfig signingConfigs.sign_default
             buildConfigField "String", "PARSE_APPLICATION_ID", "\"${configConstants.PARSE_APPLICATION_ID}\""
