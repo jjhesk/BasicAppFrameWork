@@ -19,7 +19,7 @@ public class UriCap extends RealmObject {
     private String raw_link;
     @Required
     private String date;
-
+    private boolean healthy;
     private int media_type;
 
     public String getCompatible_link() {
@@ -60,6 +60,14 @@ public class UriCap extends RealmObject {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public boolean isHealthy() {
+        return healthy;
+    }
+
+    public void setHealthy(boolean healthy) {
+        this.healthy = healthy;
     }
 
 

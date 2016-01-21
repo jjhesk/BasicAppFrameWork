@@ -44,29 +44,29 @@
             android:name=".MainHome"
             android:label="@string/app_name"
             android:theme="@style/solidNavigationBar">
-            <!--
-                        <intent-filter>
-                            <action android:name="android.intent.action.SEND" />
 
-                            <category android:name="android.intent.category.DEFAULT" />
-                            <category android:name="android.intent.category.BROWSABLE" />
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
 
-                            <data
-                                android:host="soundcloud.com"
-                                android:scheme="http" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                        </intent-filter>
-                        <intent-filter>
-                            <action android:name="android.intent.action.SEND" />
+                <data
+                    android:host="soundcloud.com"
+                    android:scheme="http" />
 
-                            <category android:name="android.intent.category.DEFAULT" />
-                            <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
 
-                            <data
-                                android:host="m.facebook.com"
-                                android:scheme="https" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                        </intent-filter>-->
+                <data
+                    android:host="m.facebook.com"
+                    android:scheme="https" />
+
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 

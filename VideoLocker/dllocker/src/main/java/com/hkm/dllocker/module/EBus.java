@@ -1,5 +1,7 @@
 package com.hkm.dllocker.module;
 
+import com.hkm.dllocker.module.events.menuCall;
+import com.hkm.dllocker.module.realm.UriCap;
 import com.squareup.otto.Bus;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,6 +20,16 @@ public class EBus {
 
     private EBus() {
 
+    }
+
+    public static void post(Object k) {
+        getInstance().post(k);
+    }
+
+    public static void newItemMenu(UriCap cc, int menuOption) {
+        menuCall c = new menuCall(cc);
+        c.setAction(menuOption);
+        getInstance().post(c);
     }
 
 }

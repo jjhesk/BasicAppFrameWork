@@ -91,7 +91,7 @@ public class ProcessOrder {
         if (getTypeprocess() == ProcessOrder.progcesstype.SOUNDCLOUD) {
             final SoundCloud client = SoundCloud.newInstance(appContext);
             client.pullFromUrl(getRequest_url(), new SoundCloud.Callback() {
-                @SuppressLint("ShowToast")
+
                 @Override
                 public void success(LinkedHashMap<String, String> result) {
                     addMessage("====success====");
@@ -117,20 +117,19 @@ public class ProcessOrder {
                     soundcloud_result = result;
                     Util.EasySoundCloudListShare(appContext, result);
                     underProcessUrl = false;
-                    Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG);
+                    Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG).show();
 
                     callback.done();
 
                 }
 
-                @SuppressLint("ShowToast")
                 @Override
                 public void failture(String why) {
                     addMessage("========error=========");
                     addMessage(why);
                     //  enableall();
                     underProcessUrl = false;
-                    Toast.makeText(appContext, "Failure in conversion\n" + why.toString(), Toast.LENGTH_LONG);
+                    Toast.makeText(appContext, "Failure in conversion\n" + why.toString(), Toast.LENGTH_LONG).show();
                     callback.done();
                 }
             });
@@ -140,7 +139,6 @@ public class ProcessOrder {
             client.getVideoUrl(
                     getRequest_url(),
                     new FBdownNet.fbdownCB() {
-                        @SuppressLint("ShowToast")
                         @Override
                         public void success(String answer) {
                             addMessage("====success====");
@@ -158,32 +156,30 @@ public class ProcessOrder {
                                     "N/A",
                                     UriCap.FACEBOOK_VIDEO)
                             )) {
-                                Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG);
+                                Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG).show();
                             }
 
                             callback.done();
                         }
 
-                        @SuppressLint("ShowToast")
                         @Override
                         public void failture(String why) {
                             addMessage("========error=========");
                             addMessage(why);
                             //      enableall();
                             underProcessUrl = false;
-                            Toast.makeText(appContext, "Failure in conversion\n" + why.toString(), Toast.LENGTH_LONG);
+                            Toast.makeText(appContext, "Failure in conversion\n" + why.toString(), Toast.LENGTH_LONG).show();
 
                             callback.done();
                         }
 
-                        @SuppressLint("ShowToast")
                         @Override
                         public void loginfirst(String why) {
                             addMessage("========need to login first=========");
                             addMessage(why);
                             //     enableall();
                             underProcessUrl = false;
-                            Toast.makeText(appContext, "Other issues from the facebook logins \n" + why.toString(), Toast.LENGTH_LONG);
+                            Toast.makeText(appContext, "Other issues from the facebook logins \n" + why.toString(), Toast.LENGTH_LONG).show();
 
                             callback.done();
 

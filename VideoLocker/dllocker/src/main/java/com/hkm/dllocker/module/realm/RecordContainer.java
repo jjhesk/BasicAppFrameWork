@@ -66,11 +66,11 @@ public class RecordContainer {
     }
 
 
-    public boolean addNewRecord(String raw, String product, @Nullable String media_title, int mediaType) {
+    public boolean addNewRecord(String raw, String product_link, @Nullable String media_title, int mediaType) {
         Realm realm = Realm.getInstance(conf);
-        if (check_duplicated(realm, media_title)) return false;
+        if (check_duplicated(realm, product_link)) return false;
         realm.beginTransaction();
-        newCap(realm.createObject(UriCap.class), raw, product, media_title, mediaType);
+        newCap(realm.createObject(UriCap.class), raw, product_link, media_title, mediaType);
         realm.commitTransaction();
         return true;
     }
@@ -118,9 +118,9 @@ public class RecordContainer {
     }
 
 
-    public boolean check_duplicated(Realm realm, String raw_string) {
+    public boolean check_duplicated(Realm realm, String compatible_link) {
         RealmQuery<UriCap> query = realm.where(UriCap.class);
-        return query.equalTo("media_title", raw_string).findFirst() != null;
+        return query.equalTo("compatible_link", compatible_link).findFirst() != null;
     }
 
 

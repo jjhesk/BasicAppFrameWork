@@ -1,23 +1,32 @@
 package com.hkm.dllocker;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.hkm.advancedtoolbar.Util.ErrorMessage;
 import com.hkm.advancedtoolbar.V5.BeastBar;
 import com.hkm.dllocker.content.RecentActivities;
+import com.hkm.dllocker.module.ActionMenu;
 import com.hkm.dllocker.module.Clipboardmanager;
 import com.hkm.dllocker.module.DLUtil;
 import com.hkm.dllocker.module.EBus;
 import com.hkm.dllocker.module.ProcessOrder;
+import com.hkm.dllocker.module.UI;
+import com.hkm.dllocker.module.events.menuCall;
 import com.hkm.layout.App.WeiXinHost;
 import com.hkm.layout.Dialog.ExitDialog;
 import com.hkm.layout.Menu.TabIconView;
 import com.hkm.layout.WeiXinTabHost;
 import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hesk on 7/1/16.
@@ -32,6 +41,7 @@ public class MainHome extends WeiXinHost<Fragment> {
     private int tab_position = 0;
     private boolean tabLock = false, enable_back_button = false;
     private Runnable back_button_event;
+    private ActionMenu am;
 
     @Override
     public void onBackPressed() {
@@ -125,7 +135,6 @@ public class MainHome extends WeiXinHost<Fragment> {
         BeastBar.Builder bb = new BeastBar.Builder();
         bb.search(R.mipmap.ic_action_find);
         bb.companyIcon(R.drawable.actionbar_bg_hb_logo);
-        bb.back(R.drawable.ic_back_adjusted);
         bb.background(R.drawable.actionbar_bg_hb_white);
         bb.back(R.drawable.ic_find_replace_24dp);
         mBeastWorker = BeastBar.withToolbar(this, mxToolBarV7, bb);
@@ -142,12 +151,14 @@ public class MainHome extends WeiXinHost<Fragment> {
             }
         });
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        am = new ActionMenu(this);
+        am.attachBottomSheet();
         super.configToolBar(mxToolBarV7);
     }
 
     private void renderOriginalTabByPosition(final int position) {
-        mBeastWorker.setBackIconFunc(null);
-        enable_back_button = false;
+        //  mBeastWorker.setBackIconFunc(null);
+        //    enable_back_button = false;
        /* Menuitem chosen = overhead_data.nav_bar.get(position);
         if (chosen.getName().equalsIgnoreCase("newsfeed")) {
             mBeastWorker.showMainLogo();
@@ -184,18 +195,13 @@ public class MainHome extends WeiXinHost<Fragment> {
         return item;
     }*/
 
-    private TabIconView.Icon ic_button(String name, String display) {
-        if (name.equalsIgnoreCase("newsfeed")) {
-            return TabIconView.newVectorIconTab(display, R.drawable.ic_cate_active_11t, R.drawable.ic_cate_active_11t);
-        } else if (name.equalsIgnoreCase("categories")) {
-            return TabIconView.newVectorIconTab(display, R.drawable.ic_cate_active_11t, R.drawable.ic_cate_active_11t);
-        } else if (name.equalsIgnoreCase("tv")) {
-            return TabIconView.newVectorIconTab(display, R.drawable.ic_cate_active_11t, R.drawable.ic_cate_active_11t);
-        } else if (name.equalsIgnoreCase("settings")) {
-            return TabIconView.newVectorIconTab(display, R.drawable.ic_cate_active_11t, R.drawable.ic_cate_active_11t);
-        } else {
-            return TabIconView.newVectorIconTab(display, R.drawable.icon_main_normal_grid, R.drawable.icon_main_selected_grid);
+    @Override
+    protected List<TabIconView.Icon> getCustomTabItems() {
+        List<TabIconView.Icon> item = new ArrayList<>();
+        for (int u = 0; u < 4; u++) {
+            item.add(UI.ic_button(u));
         }
+        return item;
     }
 
 
@@ -301,5 +307,19 @@ public class MainHome extends WeiXinHost<Fragment> {
         }
     }
 
-
+    @Subscribe
+    public void eMenuCall(menuCall call) {
+        if (call.getAction() == menuCall.COPY) {
+            Clipboardmanager.copyToClipboard(this, call.getCap().getCompatible_link());
+            Toast.makeText(this, "link is copied", Toast.LENGTH_LONG).show();
+        }
+        if (call.getAction() == menuCall.VALIDATE) {
+            Clipboardmanager.copyToClipboard(this, call.getCap().getCompatible_link());
+            Toast.makeText(this, "link is copied", Toast.LENGTH_LONG).show();
+        }
+        if (call.getAction() == menuCall.SHARE) {
+            Clipboardmanager.copyToClipboard(this, call.getCap().getCompatible_link());
+            Toast.makeText(this, "link is copied", Toast.LENGTH_LONG).show();
+        }
+    }
 }

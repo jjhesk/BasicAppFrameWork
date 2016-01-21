@@ -61,6 +61,23 @@ public class RecentActivities extends ListBaseLinear {
         return nil;
     }
 
+    public void notifylist() {
+        adp = new datadaptr(rm_container.getAllRecords());
+        listview_layout.setAdapter(adp);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EBus.getInstance().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EBus.getInstance().unregister(this);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rm_container = RecordContainer.getInstnce(getActivity());
@@ -70,13 +87,16 @@ public class RecentActivities extends ListBaseLinear {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
         try {
             initBinding(view);
         } catch (Exception e) {
             ErrorMessage.alert(e.getMessage(), getChildFragmentManager());
         }
+        setEmptyViewContent(view);
+    }
 
+
+    protected void setEmptyViewContent(View view) {
         if (getArguments() != null) {
             int resId = getArguments().getInt(IMAGE_RES);
             ImageView gi = (ImageView) view.findViewById(R.id.searchimage);
@@ -164,9 +184,7 @@ public class RecentActivities extends ListBaseLinear {
         b.touch_box.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Util.EasyVideoMessageShare(getActivity(), "I just come acrossed from this download link @ ",
-                        u.getCompatible_link());
+                EBus.newItemMenu(u);
             }
         });
     }
@@ -185,21 +203,5 @@ public class RecentActivities extends ListBaseLinear {
         }
     }
 
-    public void notifylist() {
-        adp = new datadaptr(rm_container.getAllRecords());
-        listview_layout.setAdapter(adp);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        EBus.getInstance().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EBus.getInstance().unregister(this);
-    }
 
 }
