@@ -25,7 +25,7 @@ import com.hkm.layout.R;
  */
 public class BottomSheetDialogFragment extends DialogFragment {
     public static final String MEASUREMENT_HEIGHT = "HEIGHT";
-    private ProgressBar pro;
+    private ProgressBar proloadingbar;
     private int mHeight;
     private static Fragment insideFragment;
     private View root;
@@ -89,13 +89,30 @@ public class BottomSheetDialogFragment extends DialogFragment {
                 root.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
-        pro = (ProgressBar) root.findViewById(R.id.lylib_ui_loading_progress_bottom_up_frame);
+        proloadingbar = (ProgressBar) root.findViewById(R.id.lylib_ui_loading_progress_bottom_up_frame);
         return root;
     }
 
     @Override
     public void dismiss() {
         super.dismiss();
+    }
+
+    protected void hideloading() {
+        if (proloadingbar.getVisibility() != View.GONE) {
+            proloadingbar.animate().alpha(0).withEndAction(new Runnable() {
+                @Override
+                public void run() {
+                    proloadingbar.setVisibility(View.GONE);
+                }
+            });
+        }
+    }
+
+    protected void showloading() {
+        proloadingbar.setVisibility(View.VISIBLE);
+        proloadingbar.setAlpha(0f);
+        proloadingbar.animate().alpha(1f);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -105,6 +122,8 @@ public class BottomSheetDialogFragment extends DialogFragment {
                 .replace(R.id.lylib_bottom_fragment_holder_framelayout, mfragment, "EXTRA_OPTIONS")
                 .addToBackStack(null)
                 .commit();
-        pro.setVisibility(View.GONE);
+        hideloading();
     }
+
+
 }

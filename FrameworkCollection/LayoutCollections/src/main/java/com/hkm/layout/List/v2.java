@@ -1,4 +1,4 @@
-package com.hkm.layout.fragment;
+package com.hkm.layout.List;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -12,30 +12,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.hkm.layout.R;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.uiUtils.ScrollSmoothLineaerLayoutManager;
 import com.squareup.picasso.Picasso;
-import com.hkm.layout.R;
 
 /**
  * Created by hesk on 5/8/15.
  */
-public abstract class basicfeed extends Fragment {
+public abstract class v2 extends Fragment {
     protected Handler hlder = new Handler();
     protected UltimateRecyclerView listview_layout;
     private ProgressBar loadingbar;
     private boolean inital_loading_use = true, isRefresh = false;
-    public final static String URL = "data_url", FRAGMENTTITLE = "fragment_title", FRAGMENTTITLE_RESID = "title_idres", LIST_WITH_AD = "HasAdOnIt", SLUG = "slug", REQUEST_TYPE = "typerequest", TAG = "newfeed";
+    public final static String URL = "data_url", FRAGMENTTITLE = "fragment_title", FRAGMENTTITLE_RESID = "title_idres", LIST_WITH_AD = "HasAdOnIt", SLUG = "slug", SEARCH_WORD = "search_wd", REQUEST_TYPE = "typerequest", TAG = "newfeed";
     public final static int
             MAJOR = -1,
             MAJOR_FILTERED = -2,
             CATE = -5,
             CATE_FILTERED = -6,
             UNSET = -9,
+            TV = -12,
             LATEST = -10,
             BROWSERABLE_FULL_URL = -7,
+            GENERAL = -11,
             SEARCH = -8;
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(setMainLayoutId(), container, false);
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -44,21 +50,21 @@ public abstract class basicfeed extends Fragment {
     }
 
     @LayoutRes
-    protected int getlayout() {
-        return R.layout.loading_list_simple;
+    protected int setEmptyListViewId() {
+        return 0;
     }
 
+    @LayoutRes
+    protected abstract int setMainLayoutId();
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(getlayout(), container, false);
-    }
+    @LayoutRes
+    protected abstract int normalLayoutResId();
 
     protected abstract void onClickItem(final long routePID);
 
     protected abstract void onClickItem(final String route);
 
-    protected abstract void setUltimateRecyclerViewExtra(final UltimateRecyclerView listview);
+    protected abstract void afterRenderViewLayout(final UltimateRecyclerView listview);
 
     /**
      * step 1:
@@ -76,7 +82,6 @@ public abstract class basicfeed extends Fragment {
     protected abstract void loadDataInitial();
 
     protected ScrollSmoothLineaerLayoutManager mLayoutManager;
-
 
     protected int getSmoothDuration() {
         return 300;
@@ -105,7 +110,6 @@ public abstract class basicfeed extends Fragment {
         loadingbar.animate().alpha(1f);
     }
 
-
     protected boolean isNowInitial() {
         return inital_loading_use;
     }
@@ -122,11 +126,18 @@ public abstract class basicfeed extends Fragment {
     private void renderviewlayout(View view) throws Exception {
         listview_layout = (UltimateRecyclerView) view.findViewById(R.id.lylib_list_uv);
         loadingbar = (ProgressBar) view.findViewById(R.id.lylib_ui_loading_circle);
-        mLayoutManager = new ScrollSmoothLineaerLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false, getSmoothDuration());
-        listview_layout.setLayoutManager(mLayoutManager);
+        listview_layout.setLayoutManager(constructLayoutManager());
         listview_layout.setHasFixedSize(false);
         listview_layout.setSaveEnabled(false);
-        setUltimateRecyclerViewExtra(listview_layout);
+        if (setEmptyListViewId() != 0) {
+            listview_layout.setEmptyView(setEmptyListViewId());
+        }
+        afterRenderViewLayout(listview_layout);
+    }
+
+    protected LinearLayoutManager constructLayoutManager() {
+        mLayoutManager = new ScrollSmoothLineaerLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, getSmoothDuration());
+        return mLayoutManager;
     }
 
     @Override

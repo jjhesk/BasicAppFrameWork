@@ -11,8 +11,8 @@
 
     <ProgressBar
         android:id="@id/lylib_ui_loading_progress_bottom_up_frame"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/loading_size"
+        android:layout_height="@dimen/loading_size"
         android:layout_centerInParent="true" />
 
 </RelativeLayout>

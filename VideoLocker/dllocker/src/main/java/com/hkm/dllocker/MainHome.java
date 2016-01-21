@@ -127,7 +127,7 @@ public class MainHome extends WeiXinHost<Fragment> {
         bb.companyIcon(R.drawable.actionbar_bg_hb_logo);
         bb.back(R.drawable.ic_back_adjusted);
         bb.background(R.drawable.actionbar_bg_hb_white);
-        bb.back(R.drawable.ptr_rotate_arrow);
+        bb.back(R.drawable.ic_find_replace_24dp);
         mBeastWorker = BeastBar.withToolbar(this, mxToolBarV7, bb);
         mBeastWorker.setFindIconFunc(new Runnable() {
             @Override
