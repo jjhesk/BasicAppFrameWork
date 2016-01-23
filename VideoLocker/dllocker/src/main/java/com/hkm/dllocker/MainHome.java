@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.hkm.advancedtoolbar.Util.ErrorMessage;
 import com.hkm.advancedtoolbar.V5.BeastBar;
 import com.hkm.dllocker.content.RecentActivities;
+import com.hkm.dllocker.content.ViewLog;
 import com.hkm.dllocker.module.Clipboardmanager;
 import com.hkm.dllocker.module.DLUtil;
 import com.hkm.dllocker.module.EBus;
@@ -27,6 +28,7 @@ import com.hkm.layout.App.WeiXinHost;
 import com.hkm.layout.Dialog.ExitDialog;
 import com.hkm.layout.Menu.TabIconView;
 import com.hkm.layout.WeiXinTabHost;
+import com.hkm.vdlsdk.Util;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -179,6 +181,31 @@ public class MainHome extends WeiXinHost<Fragment> {
             setFragment(h, "#preference");
             mBeastWorker.setActionTitle(getString(R.string.action_settings));
         }*/
+
+        if (position == 0) {
+            RecentActivities cate = new RecentActivities();
+            setFragment(cate, "#newsfeed");
+            switchFindIconFunc(true);
+        }
+
+        if (position == 2) {
+            ViewLog cate = new ViewLog();
+            setFragment(cate, "#newsfeed");
+            switchFindIconFunc(false);
+        }
+    }
+
+    private void switchFindIconFunc(boolean b) {
+        if (b) {
+            mBeastWorker.setFindIconFunc(new Runnable() {
+                @Override
+                public void run() {
+                    searchView.showSearch();
+                }
+            });
+        } else {
+            mBeastWorker.setFindIconFunc(null);
+        }
     }
 
     protected void headerPosition(int ktab) {
@@ -288,7 +315,6 @@ public class MainHome extends WeiXinHost<Fragment> {
     @Override
     protected void onStart() {
         super.onStart();
-
         EBus.getInstance().register(this);
     }
 
@@ -296,7 +322,6 @@ public class MainHome extends WeiXinHost<Fragment> {
     protected void onStop() {
         super.onStop();
         EBus.getInstance().unregister(this);
-
     }
 
     private void start_clipboard_detection() {
@@ -348,9 +373,10 @@ public class MainHome extends WeiXinHost<Fragment> {
 
             @Override
             public void onClick(View v) {
-                EBus.newItemMenu((UriCap) temp_stored, menuCall.SHARE);
+                // EBus.newItemMenu((UriCap) temp_stored, menuCall.SHARE);
                 Toast.makeText(MainHome.this, "Clicked Backup", Toast.LENGTH_SHORT).show();
                 mBottomSheetDialog.dismiss();
+                Util.EasyVideoMessageShare(MainHome.this, "I just found out this title as " + temp_stored.getMedia_title(), temp_stored.getCompatible_link());
             }
         });
 
@@ -358,9 +384,10 @@ public class MainHome extends WeiXinHost<Fragment> {
 
             @Override
             public void onClick(View v) {
-                EBus.newItemMenu((UriCap) temp_stored, menuCall.SHARE);
-                Toast.makeText(MainHome.this, "Clicked Detail", Toast.LENGTH_SHORT).show();
+                // EBus.newItemMenu((UriCap) temp_stored, menuCall.SHARE);
                 mBottomSheetDialog.dismiss();
+                Clipboardmanager.copyToClipboard(MainHome.this, temp_stored.getCompatible_link());
+                Toast.makeText(MainHome.this, "link is copied", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -368,9 +395,10 @@ public class MainHome extends WeiXinHost<Fragment> {
 
             @Override
             public void onClick(View v) {
-                EBus.newItemMenu((UriCap) temp_stored, menuCall.SHARE);
-                Toast.makeText(MainHome.this, "Clicked Open", Toast.LENGTH_SHORT).show();
+                //  EBus.newItemMenu((UriCap) temp_stored, menuCall.SHARE);
+                Toast.makeText(MainHome.this, "Validation..", Toast.LENGTH_SHORT).show();
                 mBottomSheetDialog.dismiss();
+                // DLUtil..LinkConfirmer(temp_stored.getCompatible_link())
             }
         });
 

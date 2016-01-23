@@ -6,9 +6,10 @@
     <color name="primary_pref">#ff3388cd</color>
     <color name="primary_pref_v2">#ff006fbb</color>
     <color name="not_pref_v2">#ffab3749</color>
-    <color name="grey_disabled">@color/second_pref</color>
-    <color name="second_pref">#ffc2c0c4</color>
-    <color name="second_pref_v2">#ffAAAAAA</color>
+    <color name="grey_disabled">@color/second_pref_23</color>
+    <color name="second_pref_21">#e5cccccc</color>
+    <color name="second_pref_23">#ffcccccc</color>
+    <color name="second_pref_22">#b7cfcfcf</color>
     <color name="text_color_grey">#ff666666</color>
     <color name="text_color_bottom_line">#ffeaeaea</color>
     <color name="text_color_dark">#ff333333</color>

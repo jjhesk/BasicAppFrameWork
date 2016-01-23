@@ -3,10 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom|center"
-    android:background="@android:color/white"
+    android:background="@color/second_pref_22"
     android:orientation="vertical">
 
     <com.hkm.slider.Layouts.MaterialRippleLayout
+        style="@style/ripple_confi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -14,9 +15,9 @@
             android:id="@+id/c_share"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_fix_issue"
+            android:drawableLeft="@drawable/ic_share_24dp"
             android:drawablePadding="15dp"
-            android:drawableTint="@color/second_pref_v2"
+            android:drawableTint="@color/second_pref_21"
             android:gravity="center_vertical"
             android:padding="15dp"
             android:text="Share Link"
@@ -33,7 +34,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_openinbox"
             android:drawablePadding="15dp"
-            android:drawableTint="@color/second_pref_v2"
+            android:drawableTint="@color/second_pref_21"
             android:gravity="center_vertical"
             android:padding="15dp"
             android:text="Copy Link"
@@ -50,7 +51,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_disc_cc"
             android:drawablePadding="15dp"
-            android:drawableTint="@color/second_pref_v2"
+            android:drawableTint="@color/second_pref_21"
             android:gravity="center_vertical"
             android:padding="15dp"
             android:text="Fix Issue"
@@ -67,10 +68,10 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_boxup"
             android:drawablePadding="15dp"
-            android:drawableTint="@color/second_pref_v2"
+            android:drawableTint="@color/second_pref_21"
             android:gravity="center_vertical"
             android:padding="15dp"
-            android:text="Uninstall"
+            android:text="Remove"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </com.hkm.slider.Layouts.MaterialRippleLayout>
 </LinearLayout>

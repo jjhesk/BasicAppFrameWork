@@ -9,4 +9,5 @@
     <item name="ls_ft_icon" type="id" />
     <item name="ls_button_play" type="id" />
     <item name="ls_row_button" type="id" />
+    <item name="ls_top_view" type="id" />
 </resources>

@@ -11,7 +11,7 @@
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="colorPrimary">@color/second_pref</item>
+        <item name="colorPrimary">@color/second_pref_21</item>
         <item name="colorPrimaryDark">@color/main_background</item>
         <!-- <item name="actionBarStyle">@style/actionBarWhiteNoShadow</item>-->
         <!-- <item name="actionBarInsetStart"></item>-->

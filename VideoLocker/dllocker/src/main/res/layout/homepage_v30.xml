@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@id/top_view"
+        android:id="@id/ls_top_view"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
@@ -14,13 +14,13 @@
         android:id="@+id/drag_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top_view"
+        android:layout_below="@id/ls_top_view"
         android:background="@color/common_background"
         MaterialTabHost:dtlOverDrag="false">
 
         <!--top view-->
         <LinearLayout
-            android:id="@+id/top_view"
+            android:id="@id/ls_top_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"

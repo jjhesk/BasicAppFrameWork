@@ -28,10 +28,14 @@ ext {
     targetSdk = 23
     buildTools = '23.0.2'
     supportLibrary = '23.1.1'
-    videoNetworkSDK = '0.1.2'
+
+    videoNetworkSDK = '0.1.5'
     ftKit = '0.4.1'
     uidebug = '0.1.0'
     collection_ui = '0.1.5'
+
+
+    precompile_file_name = 'dllocker-publishing_package-release'
 
     //Support Libraries dependencies
     supportDependencies = [

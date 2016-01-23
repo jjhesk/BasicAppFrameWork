@@ -10,11 +10,12 @@
     <string name="fashion">ファッション</string>
     <string name="action_tv">テレビ</string>
     <string name="waitinginput">ここにあなたのコメントを入力します。</string>
-    <string name="action_settings" >設定</string>
-    <string name="setting_time_description" >数分以内にリフレッシュ瞬間。ゼロ= OFF 。 MAX = 20</string>
+    <string name="action_settings">設定</string>
+    <string name="setting_time_description">数分以内にリフレッシュ瞬間。ゼロ= OFF 。 MAX = 20</string>
     <string name="action_search">サーチ</string>
     <string name="exit_alert">あなたは、このアプリを終了しようとしています。確認？</string>
     <string name="lang_desc">選択あなたは言語リファレンスを読</string>
     <string name="action_categories">範疇</string>
     <string name="action_video">ビデオ</string>
+    <string name="copy_message">新しくコピーされたメッセージ</string>
 </resources>

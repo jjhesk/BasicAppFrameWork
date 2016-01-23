@@ -1,12 +1,10 @@
 package com.hkm.dllocker.module;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
 
 import com.hkm.dllocker.module.realm.RecordContainer;
 import com.hkm.dllocker.module.realm.UriCap;
-import com.hkm.vdlsdk.Util;
 import com.hkm.vdlsdk.client.FBdownNet;
 import com.hkm.vdlsdk.client.SoundCloud;
 
@@ -84,6 +82,41 @@ public class ProcessOrder {
 
     private RecordContainer container;
 
+    private void addResources(LinkedHashMap<String, String> result, int resourceType, final Context appcontext) {
+        Iterator<Map.Entry<String, String>> iel = result.entrySet().iterator();
+        int missed = 0;
+
+        while (iel.hasNext()) {
+            Map.Entry<String, String> el = iel.next();
+            addMessage("track =========================");
+            addMessage(el.getValue());
+            if ((container.addNewRecord(getRequest_url(), el.getValue(), el.getKey(), UriCap.SOUNDCLOUD)
+            )) {
+                missed++;
+            }
+        }
+
+        if (missed > 0) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("There are ");
+            sb.append(missed);
+            sb.append(" duplicated resources!");
+            showmsg(appcontext, sb.toString());
+        } else {
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("Successfully stored ");
+            sb.append(result.size());
+            sb.append(" resources!");
+            showmsg(appcontext, sb.toString());
+        }
+
+
+    }
+
+    private void showmsg(Context app, String text) {
+        Toast.makeText(app, text, Toast.LENGTH_LONG).show();
+    }
 
     public final void processStart(final Context appContext) {
         callback.start();
@@ -96,29 +129,12 @@ public class ProcessOrder {
                 public void success(LinkedHashMap<String, String> result) {
                     addMessage("====success====");
                     addMessage("request has result of " + result.size());
-                    Iterator<Map.Entry<String, String>> iel = result.entrySet().iterator();
-                    while (iel.hasNext()) {
-                        Map.Entry<String, String> el = iel.next();
-                        addMessage("track =========================");
-                        addMessage(el.getValue());
-
-                        if ((container.addNewRecord(
-                                getRequest_url(),
-                                el.getValue(),
-                                el.getKey(),
-                                UriCap.SOUNDCLOUD)
-                        )) {
-
-                        }
-
-                    }
-
+                    addResources(result, UriCap.SOUNDCLOUD, appContext);
                     fb_video_result = null;
                     soundcloud_result = result;
-                    Util.EasySoundCloudListShare(appContext, result);
+                    // Util.EasySoundCloudListShare(appContext, result);
                     underProcessUrl = false;
-                    Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG).show();
-
+                    showmsg(appContext, "Successfully converted the url resources");
                     callback.done();
 
                 }
@@ -127,7 +143,6 @@ public class ProcessOrder {
                 public void failture(String why) {
                     addMessage("========error=========");
                     addMessage(why);
-                    //  enableall();
                     underProcessUrl = false;
                     Toast.makeText(appContext, "Failure in conversion\n" + why.toString(), Toast.LENGTH_LONG).show();
                     callback.done();
@@ -149,16 +164,12 @@ public class ProcessOrder {
                             fb_video_result = answer;
                             soundcloud_result = null;
                             underProcessUrl = false;
-
-                            if ((container.addNewRecord(
-                                    getRequest_url(),
-                                    answer,
-                                    "N/A",
-                                    UriCap.FACEBOOK_VIDEO)
+                            if ((container.addNewRecord(getRequest_url(), answer, "N/A", UriCap.FACEBOOK_VIDEO)
                             )) {
-                                Toast.makeText(appContext, "Successfully converted the url resources", Toast.LENGTH_LONG).show();
+                                showmsg(appContext, "Successfully converted the url resources");
+                            } else {
+                                showmsg(appContext, "Duplicated resources!");
                             }
-
                             callback.done();
                         }
 
@@ -166,9 +177,8 @@ public class ProcessOrder {
                         public void failture(String why) {
                             addMessage("========error=========");
                             addMessage(why);
-                            //      enableall();
                             underProcessUrl = false;
-                            Toast.makeText(appContext, "Failure in conversion\n" + why.toString(), Toast.LENGTH_LONG).show();
+                            showmsg(appContext, "Failure in conversion\n" + why.toString());
 
                             callback.done();
                         }
@@ -177,10 +187,8 @@ public class ProcessOrder {
                         public void loginfirst(String why) {
                             addMessage("========need to login first=========");
                             addMessage(why);
-                            //     enableall();
                             underProcessUrl = false;
-                            Toast.makeText(appContext, "Other issues from the facebook logins \n" + why.toString(), Toast.LENGTH_LONG).show();
-
+                            showmsg(appContext, "Other issues from the facebook logins \n" + why.toString());
                             callback.done();
 
                         }

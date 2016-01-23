@@ -16,4 +16,5 @@
     <string name="lang_desc">选择你读语言</string>
     <string name="action_categories">类别</string>
     <string name="action_video">视频</string>
+    <string name="copy_message">新复制的消息</string>
 </resources>

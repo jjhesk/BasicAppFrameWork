@@ -21,7 +21,6 @@ import com.hkm.dllocker.module.EBus;
 import com.hkm.dllocker.module.realm.RecordContainer;
 import com.hkm.dllocker.module.realm.UriCap;
 import com.hkm.layout.Module.easyAdapter;
-import com.hkm.vdlsdk.Util;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.neopixl.pixlui.components.textview.TextView;

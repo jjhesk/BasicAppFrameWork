@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
@@ -9,15 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
-    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
-        android:id="@id/lylib_list_uv"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+
+    <TextView
+        android:id="@+id/text_display_console"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/ls_top_view"
-        android:background="@color/common_background"
-        app:recyclerviewClipToPadding="true"
-        app:recyclerviewPadding="0dp"
-        app:recyclerviewScrollbars="vertical" />
+        android:scrollbarSize="@dimen/scroll_bar"
+        android:singleLine="false"
+        android:textIsSelectable="true" />
 
 
     <ProgressBar
