@@ -261,6 +261,18 @@ public class WeiXinTabHost extends LinearLayout {
         }
     }
 
+    public void apiSelectPos(int n, boolean withReTouchCallback) {
+        if (getChildCount() > n && n >= 0) {
+            mLastPosition = mSelectedPosition;
+            mSelectedPosition = n;
+            invalidate();
+            if (withReTouchCallback) {
+                mReTouch.firstTouch(n);
+            }
+        }
+    }
+
+
     private class TabClickListener implements OnClickListener {
         @Override
         public void onClick(View v) {
