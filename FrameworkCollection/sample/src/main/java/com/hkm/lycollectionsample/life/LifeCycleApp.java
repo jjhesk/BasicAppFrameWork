@@ -10,8 +10,6 @@ import com.hkm.disqus.api.ApiClient;
 import com.hkm.disqus.api.ApiConfig;
 import com.hkm.lycollectionsample.BuildConfig;
 import com.hkm.lycollectionsample.R;
-import com.parse.Parse;
-import com.parse.ParseInstallation;
 import com.r0adkll.deadskunk.utils.Utils;
 import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrListener;
@@ -35,26 +33,26 @@ public class LifeCycleApp extends Application {
         // Enable Crash Reporting
         // ParseCrashReporting.enable(this);
         // ENABLE PARSE IN HERE
-        Parse.enableLocalDatastore(this);
+        //Parse.enableLocalDatastore(this);
         // Enable and initialize the parse application
-        Parse.initialize(this, BuildConfig.PARSE_APPLICATION_ID, BuildConfig.PARSE_CLIENT_KEY);
+      //  Parse.initialize(this, BuildConfig.PARSE_APPLICATION_ID, BuildConfig.PARSE_CLIENT_KEY);
         //CookieHandler.setDefault(cookieManager);
         // Save the current Installation to Parse.
 
-        ParseInstallation.getCurrentInstallation().saveInBackground();
+      //  ParseInstallation.getCurrentInstallation().saveInBackground();
         // When users indicate they are Giants fans, we subscribe them to that channel.
         //  ParsePush.subscribeInBackground("");
         initializeDisQus();
         buildPicasso();
     }
        private static void saveInstallation(){
-           ParseInstallation install = ParseInstallation.getCurrentInstallation();
+         //  ParseInstallation install = ParseInstallation.getCurrentInstallation();
 
        }
     public static void subscribeWithEmail(String email) {
-        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-        installation.put("email", email);
-        installation.saveInBackground();
+      //  ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+      //  installation.put("email", email);
+      //  installation.saveInBackground();
     }
 
     public synchronized Tracker getGA() {
