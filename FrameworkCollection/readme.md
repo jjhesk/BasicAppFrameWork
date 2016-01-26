@@ -17,11 +17,32 @@ public class MainActivity extends WeiXinHost<Fragment> {
 ```
 
 
-To implementing #2 we can start like this:
+To implementing #2 we can start like this in the xml for style:
 
-```java
-
+```xml
+  <!--this will be used at the article page theme setting-->
+    <style name="ArticlePageTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- take out the default action bar-->
+        <item name="windowActionBar">false</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="elevation">0dp</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        
+        
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="colorPrimary">@color/second_pref</item>
+        <item name="colorPrimaryDark">@color/main_background</item>
+        <!-- <item name="actionBarStyle">@style/actionBarWhiteNoShadow</item>-->
+        <!-- <item name="actionBarInsetStart"></item>-->
+    </style>
+    
+    
 ```
+
+Make use of the parameter ```<item name="android:windowTranslucentStatus">false</item>``` as this will give u the full control of status bar.
 
 Setup the toolbar we can start something like this in anywhere in the MainActivity.class:
 
