@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 
 import com.hkm.lycollectionsample.R;
 import com.hkm.lycollectionsample.life.EBus;
-import com.hkm.layout.Module.easyAdapter;
 import com.hypebeast.sdk.api.model.hbeditorial.Menuitem;
 import com.hypebeast.sdk.api.model.hbeditorial.configbank;
 import com.hypebeast.sdk.clients.HBEditorialClient;
