@@ -1,4 +1,4 @@
-package com.hkm.dllocker.module.Dialog;
+package com.hkm.dllocker.Dialog;
 
 import android.app.Dialog;
 import android.app.DialogFragment;

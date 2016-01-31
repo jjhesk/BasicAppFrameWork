@@ -176,4 +176,11 @@ public class RecordContainer {
 
         return begintransaction;
     }
+
+    public void updateItemCompatLink(UriCap item, String compatiblelinke) {
+        Realm realm = Realm.getInstance(conf);
+        realm.beginTransaction();
+        item.setCompatible_link(compatiblelinke);
+        realm.commitTransaction();
+    }
 }

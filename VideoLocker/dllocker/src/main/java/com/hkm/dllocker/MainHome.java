@@ -22,7 +22,6 @@ import com.hkm.dllocker.module.EBus;
 import com.hkm.dllocker.module.ProcessOrder;
 import com.hkm.dllocker.module.UI;
 import com.hkm.dllocker.module.events.SimpleMenu;
-import com.hkm.dllocker.module.events.menuCall;
 import com.hkm.dllocker.module.realm.UriCap;
 import com.hkm.layout.App.WeiXinHost;
 import com.hkm.layout.Dialog.ExitDialog;
@@ -183,8 +182,14 @@ public class MainHome extends WeiXinHost<Fragment> {
         }*/
 
         if (position == 0) {
-            RecentActivities cate = new RecentActivities();
+            RecentActivities cate = RecentActivities.newInstance(R.drawable.ic_fuc_copy, "nof");
             setFragment(cate, "#newsfeed");
+            switchFindIconFunc(true);
+        }
+
+        if (position == 1) {
+            RecentActivities cate = RecentActivities.newInstance(R.drawable.ic_disc_cc, "nof");
+            setFragment(cate, "#voices");
             switchFindIconFunc(true);
         }
 
@@ -278,21 +283,6 @@ public class MainHome extends WeiXinHost<Fragment> {
                         "Processing",
                         "wait for the progress...",
                         false);
-
-               /* runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (progress != null) {
-                            progress = null;
-                        }
-                        progress = ProgressDialog.show(
-                                getApplicationContext(),
-                                "Processing",
-                                "wait for the progress...",
-                                false);
-                    }
-                });*/
-
             }
 
             @Override
@@ -330,22 +320,6 @@ public class MainHome extends WeiXinHost<Fragment> {
             DLUtil.determine_for_url(board_text, getFragmentManager());
         } catch (Exception e) {
             e.fillInStackTrace();
-        }
-    }
-
-    @Subscribe
-    public void eMenuCall(menuCall call) {
-        if (call.getAction() == menuCall.COPY) {
-            Clipboardmanager.copyToClipboard(this, call.getCap().getCompatible_link());
-            Toast.makeText(this, "link is copied", Toast.LENGTH_LONG).show();
-        }
-        if (call.getAction() == menuCall.VALIDATE) {
-            Clipboardmanager.copyToClipboard(this, call.getCap().getCompatible_link());
-            Toast.makeText(this, "link is copied", Toast.LENGTH_LONG).show();
-        }
-        if (call.getAction() == menuCall.SHARE) {
-            Clipboardmanager.copyToClipboard(this, call.getCap().getCompatible_link());
-            Toast.makeText(this, "link is copied", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -392,24 +366,59 @@ public class MainHome extends WeiXinHost<Fragment> {
         });
 
         c_validate.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 //  EBus.newItemMenu((UriCap) temp_stored, menuCall.SHARE);
                 Toast.makeText(MainHome.this, "Validation..", Toast.LENGTH_SHORT).show();
                 mBottomSheetDialog.dismiss();
+
+                ProcessOrder po = null;
+                if (temp_stored.getMedia_type() == UriCap.FACEBOOK_VIDEO) {
+                    po = new ProcessOrder(ProcessOrder.progcesstype.FB_SHARE_VIDEORENEWAL);
+                } else if (temp_stored.getMedia_type() == UriCap.SOUNDCLOUD) {
+                    po = new ProcessOrder(ProcessOrder.progcesstype.SOUNDCLOUDRENEWAL);
+                }
+
+                if (po != null) {
+                    po.setrenewTarget(temp_stored);
+                    po.setOnProcessNotification(new ProcessOrder.processNotification() {
+                        @Override
+                        public void start() {
+                            progress = ProgressDialog.show(
+                                    MainHome.this,
+                                    "Processing",
+                                    "wait for the progress...",
+                                    false);
+                        }
+
+                        @Override
+                        public void done() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progress.dismiss();
+                                    if (currentFragmentNow instanceof RecentActivities) {
+                                        RecentActivities c = (RecentActivities) currentFragmentNow;
+                                        c.notifylist();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                    po.processStart(getApplicationContext());
+                }
+
+
                 // DLUtil..LinkConfirmer(temp_stored.getCompatible_link())
             }
         });
 
      /*   txtUninstall.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 EBus.newItemMenu((UriCap) temp_stored, menuCall.SHARE);
                 Toast.makeText(MainHome.this, "Clicked Uninstall", Toast.LENGTH_SHORT).show();
                 mBottomSheetDialog.dismiss();
-
             }
         });*/
 

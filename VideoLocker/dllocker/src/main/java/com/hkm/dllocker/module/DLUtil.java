@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
-import com.hkm.dllocker.module.Dialog.BooDialog;
+import com.hkm.dllocker.Dialog.BooDialog;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

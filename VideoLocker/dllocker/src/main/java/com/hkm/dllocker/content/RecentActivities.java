@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import com.hkm.advancedtoolbar.Util.ErrorMessage;
 import com.hkm.dllocker.R;
 import com.hkm.dllocker.basic.ListBaseLinear;
+import com.hkm.dllocker.module.AnimationIcon;
 import com.hkm.dllocker.module.DLUtil;
 import com.hkm.dllocker.module.EBus;
 import com.hkm.dllocker.module.realm.RecordContainer;
@@ -124,6 +125,12 @@ public class RecentActivities extends ListBaseLinear {
 
     private class datadaptr extends easyAdapter<UriCap, binder> {
 
+        @Override
+        public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+            super.onDetachedFromRecyclerView(recyclerView);
+
+
+        }
 
         /**
          * dynamic object to start
@@ -168,18 +175,23 @@ public class RecentActivities extends ListBaseLinear {
         if (u.getMedia_type() == UriCap.FACEBOOK_VIDEO) {
             b.big_image_single.setImageResource(R.drawable.ic_fb);
         }
-
+        /*if (u.getMedia_type() == UriCap.) {
+            b.big_image_single.setImageResource(R.drawable.ic_fb);
+        }*/
         b.tvtitle.setText(u.getMedia_title());
         b.tvtime.setText(DLUtil.getMoment(u.getDate()));
-        //  if (b.touch_box == null) return;
-      /*  b.touch_box.setLongClickable(true);
+        if (u.getCompatible_link() != null) {
+            b.playstatus.setText("Ready");
+            AnimationIcon.load(b.playstatus, u, AnimationIcon.Operation.START);
+            //  if (b.touch_box == null) return;
+        /*  b.touch_box.setLongClickable(true);
           b.touch_box.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 return false;
             }
         });*/
-
+        }
         b.touch_box.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,9 +200,10 @@ public class RecentActivities extends ListBaseLinear {
         });
     }
 
+
     public static class binder extends UltimateRecyclerviewViewHolder {
         public final ImageView big_image_single;
-        public final TextView tvtitle, tvtime;
+        public final TextView tvtitle, tvtime, playstatus;
         public final RelativeLayout touch_box;
 
         public binder(View itemView) {
@@ -199,6 +212,7 @@ public class RecentActivities extends ListBaseLinear {
             tvtitle = (TextView) itemView.findViewById(R.id.ls_title_top);
             tvtime = (TextView) itemView.findViewById(R.id.ls_title_article);
             touch_box = (RelativeLayout) itemView.findViewById(R.id.ls_row_button);
+            playstatus = (TextView) itemView.findViewById(R.id.ls_button_play);
         }
     }
 

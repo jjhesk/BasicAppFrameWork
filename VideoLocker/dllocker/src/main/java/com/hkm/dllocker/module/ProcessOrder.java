@@ -22,6 +22,8 @@ public class ProcessOrder {
     public LinkedHashMap<String, String> soundcloud_result;
     public String fb_video_result;
     private processNotification callback;
+    private UriCap uriTarget;
+    private RecordContainer container;
 
     public interface processNotification {
         void start();
@@ -36,7 +38,9 @@ public class ProcessOrder {
 
     public enum progcesstype {
         SOUNDCLOUD,
-        FB_SHARE_VIDEO
+        SOUNDCLOUDRENEWAL,
+        FB_SHARE_VIDEO,
+        FB_SHARE_VIDEORENEWAL
     }
 
 
@@ -54,6 +58,11 @@ public class ProcessOrder {
 
             }
         };
+    }
+
+
+    public void setrenewTarget(UriCap item) {
+        uriTarget = item;
     }
 
     public progcesstype getTypeprocess() {
@@ -79,8 +88,6 @@ public class ProcessOrder {
             DLUtil.Log += "\n" + g;
         }
     }
-
-    private RecordContainer container;
 
     private void addResources(LinkedHashMap<String, String> result, int resourceType, final Context appcontext) {
         Iterator<Map.Entry<String, String>> iel = result.entrySet().iterator();
@@ -158,11 +165,6 @@ public class ProcessOrder {
                         public void success(String answer) {
                             addMessage("====success====");
                             addMessage(answer);
-                            //  setClip(answer);
-                            //  enableall();
-                            // Util.EasyVideoMessageShare(appContext, null, answer);
-                            fb_video_result = answer;
-                            soundcloud_result = null;
                             underProcessUrl = false;
                             if ((container.addNewRecord(getRequest_url(), answer, "N/A", UriCap.FACEBOOK_VIDEO)
                             )) {
@@ -170,6 +172,8 @@ public class ProcessOrder {
                             } else {
                                 showmsg(appContext, "Duplicated resources!");
                             }
+                            fb_video_result = answer;
+                            soundcloud_result = null;
                             callback.done();
                         }
 
@@ -194,6 +198,78 @@ public class ProcessOrder {
                         }
                     }
             );
+
+        } else if (getTypeprocess() == progcesstype.FB_SHARE_VIDEORENEWAL) {
+            if (uriTarget == null) return;
+            final FBdownNet client = FBdownNet.getInstance(appContext);
+            client.getVideoUrl(
+                    uriTarget.getRaw_link(),
+                    new FBdownNet.fbdownCB() {
+                        @Override
+                        public void success(String answer) {
+                            addMessage("====success====");
+                            addMessage(answer);
+                            underProcessUrl = false;
+                            container.updateItemCompatLink(uriTarget, answer);
+                            showmsg(appContext, "The resource is renewed");
+                            fb_video_result = answer;
+                            soundcloud_result = null;
+                            callback.done();
+                        }
+
+                        @Override
+                        public void failture(String why) {
+                            addMessage("========error=========");
+                            addMessage(why);
+                            underProcessUrl = false;
+                            showmsg(appContext, "Failure in conversion\n" + why.toString());
+                            callback.done();
+                        }
+
+                        @Override
+                        public void loginfirst(String why) {
+                            addMessage("========need to login first=========");
+                            addMessage(why);
+                            underProcessUrl = false;
+                            showmsg(appContext, "Other issues from the facebook logins \n" + why.toString());
+                            callback.done();
+                        }
+                    }
+            );
+
+        } else if (getTypeprocess() == progcesstype.SOUNDCLOUDRENEWAL) {
+            if (uriTarget == null) return;
+            final SoundCloud client = SoundCloud.newInstance(appContext);
+            client.pullFromUrl(uriTarget.getRaw_link(), new SoundCloud.Callback() {
+
+                @Override
+                public void success(LinkedHashMap<String, String> result) {
+                    addMessage("====success====");
+                    addMessage("request has result of " + result.size());
+                    addMessage("can only process this first resource on renewal");
+                    Iterator<Map.Entry<String, String>> iel = result.entrySet().iterator();
+                    while (iel.hasNext()) {
+                        Map.Entry<String, String> el = iel.next();
+                        addMessage("track =========================");
+                        addMessage(el.getValue());
+                        container.updateItemCompatLink(uriTarget, el.getValue());
+                        break;
+                    }
+                    underProcessUrl = false;
+                    showmsg(appContext, "Successfully renewed things");
+                    callback.done();
+
+                }
+
+                @Override
+                public void failture(String why) {
+                    addMessage("========error=========");
+                    addMessage(why);
+                    underProcessUrl = false;
+                    Toast.makeText(appContext, "Failure in conversion\n" + why.toString(), Toast.LENGTH_LONG).show();
+                    callback.done();
+                }
+            });
 
         } else {
             underProcessUrl = false;

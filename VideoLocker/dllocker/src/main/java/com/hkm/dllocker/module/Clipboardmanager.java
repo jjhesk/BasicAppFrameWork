@@ -121,8 +121,8 @@ public class Clipboardmanager {
                 while ((len = reader.read(buffer)) > 0) {
                     builder.append(buffer, 0, len);
                 }
-                return builder.toString();
 
+                return builder.toString();
             } catch (FileNotFoundException e) {
                 // Unable to open content URI as text... not really an
                 // error, just something to ignore.
