@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -329,12 +330,13 @@ public class MainHome extends WeiXinHost<Fragment> {
         openBottomSheet(sim.getCap());
     }
 
+
     public void openBottomSheet(final UriCap temp_stored) {
         View view = getLayoutInflater().inflate(R.layout.tabs_options, null);
         final TextView c_share = (TextView) view.findViewById(R.id.c_share);
         final TextView c_copy = (TextView) view.findViewById(R.id.c_copy);
         final TextView c_validate = (TextView) view.findViewById(R.id.c_validate);
-        // final TextView txtUninstall = (TextView) view.findViewById(R.id.txt_uninstall);
+        final TextView c_download = (TextView) view.findViewById(R.id.c_downlink);
 
         final Dialog mBottomSheetDialog = new Dialog(MainHome.this, R.style.MaterialDialogSheet);
         mBottomSheetDialog.setContentView(view);
@@ -342,7 +344,14 @@ public class MainHome extends WeiXinHost<Fragment> {
         mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
         mBottomSheetDialog.show();
-
+        c_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(temp_stored.getCompatible_link()));
+                startActivity(i);
+            }
+        });
         c_share.setOnClickListener(new View.OnClickListener() {
 
             @Override
