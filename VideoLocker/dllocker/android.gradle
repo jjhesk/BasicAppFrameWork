@@ -1,7 +1,7 @@
 android {
     compileSdkVersion targetSdk
     buildToolsVersion buildTools
-
+    def precompile_file_name = "dllocker-release"
     def configConstants = new Properties()
     def Props = file("applaunch.properties")
     if (Props.exists()) {
@@ -14,7 +14,7 @@ android {
         minSdkVersion 17
         targetSdkVersion targetSdk
         versionCode publish_build_number
-        versionName publich_version_name
+        versionName publish_version_name
         multiDexEnabled = false
     }
     buildTypes {
@@ -27,7 +27,8 @@ android {
             variant.outputs.each { output ->
                 def date = new Date();
                 def formattedDate = date.format('yyyyMMddHHmmss')
-                def new_file_name = "SUNAMI-" + formattedDate + "-v" + defaultConfig.versionName
+                def file_name = "dllock-" + "dw" + "-release"
+                def new_file_name = "Tsunami-" + formattedDate + "-v" + defaultConfig.versionName
                 output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace(precompile_file_name, new_file_name))
             }
         }
@@ -36,9 +37,15 @@ android {
     }
     signingConfigs {
         sign_default {
-            keyAlias 'hypebeasteditorial'
+            keyAlias 'vdomediadownloadnotication'
             keyPassword 'kmk12345'
-            storeFile file('/Users/hesk/Documents/certs/notupdatedGhesk.keystore')
+            storeFile file('/Users/hesk/Documents/certs/hkm.keystore')
+            storePassword 'kmk12345'
+        }
+        sign_home {
+            keyAlias 'vdomediadownloadnotication'
+            keyPassword 'kmk12345'
+            storeFile file('C:\\1 NTFS\\keystore\\hkm.keystore')
             storePassword 'kmk12345'
         }
     }
@@ -56,6 +63,12 @@ android {
             buildConfigField "String", "DFP_LIST_UNIT_ID", "\"${configConstants.DFP_LIST_UNIT_ID}\""
             buildConfigField "String", "CUSTOM_MENU", "\"${configConstants.CUSTOM_MENU}\""
             buildConfigField "String", "DFP_BANNER_UNIT_ID", "\"${configConstants.DFP_BANNER_UNIT_ID}\""
+        }
+
+        golden_publish {
+            applicationId "com.golden.mediacatcher"
+            versionName defaultConfig.versionName
+            signingConfig signingConfigs.sign_home
         }
     }
     lintOptions {
