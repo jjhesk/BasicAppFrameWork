@@ -14,7 +14,8 @@ import java.util.List;
 /**
  * Created by hesk on 17/9/15.
  */
-public abstract class easyAdapter<T, BINDHOLDER extends UltimateRecyclerviewViewHolder> extends UltimateViewAdapter {
+public abstract class easyAdapter<T, BINDHOLDER extends UltimateRecyclerviewViewHolder>
+        extends UltimateViewAdapter {
     private List<T> currentlistsource;
 
     /**
@@ -61,8 +62,8 @@ public abstract class easyAdapter<T, BINDHOLDER extends UltimateRecyclerviewView
         return new UltimateRecyclerviewViewHolder(viewGroup);
     }
 
-    public void insert(T object) {
-        insert(currentlistsource, object, currentlistsource.size());
+    public final void insertLast(T object) {
+        insertLastInternal(currentlistsource, object);
     }
 
     @Deprecated
@@ -81,13 +82,7 @@ public abstract class easyAdapter<T, BINDHOLDER extends UltimateRecyclerviewView
 
     public void removeAll(int grid_padding_base) {
         try {
-            final int sizeold = currentlistsource.size();
-            while (currentlistsource.size() > 0) {
-                currentlistsource.remove(0);
-            }
-            // notifyItemRangeRemoved(grid_padding_base - 1, grid_padding_base + sizeold);
-            notifyItemRangeRemoved(0, sizeold);
-            Log.d("removeItem", "success @" + sizeold);
+            removeAllInternal(currentlistsource);
         } catch (ArrayIndexOutOfBoundsException e) {
             Log.d("removeItem", e.getMessage());
         } catch (IndexOutOfBoundsException e) {

@@ -106,7 +106,6 @@ public class advancedAdMobAdapter extends AdmobAdapter {
      * Called by RecyclerView to display the data at the specified position. This method
      * should update the contents of the {@link ViewHolder#itemView} to reflect the item at
      * the given position.
-     * <p/>
      * Note that unlike {@link ListView}, RecyclerView will not call this
      * method again if the position of the item changes in the data set unless the item itself
      * is invalidated or the new position cannot be determined. For this reason, you should only
@@ -138,7 +137,6 @@ public class advancedAdMobAdapter extends AdmobAdapter {
         }
     }
 
-
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup viewGroup) {
         return null;
@@ -152,7 +150,6 @@ public class advancedAdMobAdapter extends AdmobAdapter {
         return (String) super.getItem(position);
     }
 
-
     @Override
     public long getHeaderId(int position) {
         if (position == 0) {
@@ -162,17 +159,12 @@ public class advancedAdMobAdapter extends AdmobAdapter {
         }
     }
 
-
-    public void insert(String string, int position) {
-        insert(list, string, position);
+    public final void insertLast(String string) {
+        insertLastInternal(list, string);
     }
 
-    public void remove(int position) {
-        remove(list, position);
-    }
-
-    public void clear() {
-        clear(list);
+    public final void removeAll() {
+        removeAllInternal(list);
     }
 
     @Override
@@ -189,7 +181,6 @@ public class advancedAdMobAdapter extends AdmobAdapter {
     public void clearSelection(int pos) {
         super.clearSelection(pos);
     }
-
 
     public void swapPositions(int from, int to) {
         swapPositions(list, from, to);
