@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="menu_width">200dp</dimen>
-    <dimen name="splash_horizontal_margin">400dp</dimen>
-    <integer name="video_height">400</integer>
-    <dimen name="list_pic_item_height">402.8583486dp</dimen>
-    <dimen name="list_pic_item_width">620dp</dimen>
-
-</resources>

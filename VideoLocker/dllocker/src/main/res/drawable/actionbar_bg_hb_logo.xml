@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:bottom="@dimen/actionbar_logo_v_margin"
-        android:drawable="@drawable/tsunami_lancher"
-        android:left="@dimen/actionbar_logo_h_margin"
-        android:right="@dimen/actionbar_logo_h_margin"
-        android:top="@dimen/actionbar_logo_v_margin" />
-</layer-list>
