@@ -9,7 +9,6 @@ import com.hkm.lycollectionsample.adInterstitual.ListAd;
 import com.hkm.lycollectionsample.life.Config;
 import com.hkm.lycollectionsample.life.HBUtil;
 import com.hkm.lycollectionsample.pages.adapters.LoadMoreGridLayoutManager;
-import com.hkm.layout.fragment.basicfeed;
 import com.hypebeast.sdk.api.model.hbeditorial.ArticleData;
 import com.marshalchen.ultimaterecyclerview.AdmobAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;

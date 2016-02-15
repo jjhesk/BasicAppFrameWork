@@ -11,12 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@id/lylib_list_uv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:recyclerviewClipToPadding="true"
-        app:recyclerviewScrollbars="vertical" />
+        android:layout_height="match_parent" />
 
     <RelativeLayout
         android:id="@id/lylib_after"

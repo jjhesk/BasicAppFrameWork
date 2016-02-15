@@ -17,8 +17,6 @@ import com.hkm.layout.Dialog.ErrorMessage;
 import com.hkm.layout.NonSwipe;
 import com.hkm.layout.R;
 import com.hkm.layout.WeiXinTabLayout;
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.uiUtils.ScrollSmoothLineaerLayoutManager;
 import com.ogaclejapan.smarttablayout.utils.v13.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v13.FragmentPagerItems;
 import com.squareup.picasso.Picasso;

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 
 import com.hkm.lycollectionsample.pages.featureList.gridListBasic;
-import com.hkm.layout.Module.easyAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
 /**
